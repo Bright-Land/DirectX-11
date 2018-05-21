@@ -1,0 +1,67 @@
+# File produced by Open Asset Import Library (http://www.assimp.sf.net)
+# (assimp v3.1.187496374)
+
+newmtl Tex_2410_0.dds
+Kd 0.588 0.588 0.588
+Ka 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Frame0002\Tex_2410_0.png
+
+newmtl JoinedMaterial_#3
+Kd 0.588 0.588 0.588
+Ka 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Frame0002\Tex_2422_0.png
+
+newmtl JoinedMaterial_#5
+Kd 0.588 0.588 0.588
+Ka 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Frame0002\Tex_2470_0.png
+
+newmtl Tex_2496_0.dds
+Kd 0.588 0.588 0.588
+Ka 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Frame0002\Tex_2496_0.png
+
+newmtl JoinedMaterial_#13
+Kd 0.588 0.588 0.588
+Ka 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Frame0002\Tex_2832_0.png
+
+newmtl Tex_1924_2.dds
+Kd 0.588 0.588 0.588
+Ka 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Frame0002\Tex_1924_2.png
+
+newmtl JoinedMaterial_#11
+Kd 0.588 0.588 0.588
+Ka 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Frame0002\Tex_2838_5.png
+
+newmtl Tex_2969_0.dds
+Kd 0.588 0.588 0.588
+Ka 0 0 0
+Ke 0 0 0
+d 1
+illum 1
+map_Kd Frame0002\Tex_2969_0.png
+

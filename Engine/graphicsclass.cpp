@@ -365,7 +365,9 @@ bool GraphicsClass::Frame(int fps, int cpu, float frameTime, int mouseX, int mou
 
 	// Set the position of the camera.
 	m_Camera->SetPosition(left + right, up + down, -8.0f+ front + behind);
-	m_Camera->SetRotation(((mouseY - 600)) * 0.95f,(mouseX - 960)* 0.95f, 0.0f);
+
+	// 마우스가 화면에 닿으면 안 움직이는 것은 정상임. 이건 따로 고칠 필요 없음.
+	m_Camera->SetRotation((mouseY - 600) * 0.25f, (mouseX - 960) * 0.25f , 0.0f);	
 
 	return true;
 }
@@ -393,12 +395,6 @@ bool GraphicsClass::Render()
 	// Clear the buffers to begin the scene.
 	m_D3D->BeginScene(0.5f, 0.5f, 0.8f, 1.0f);
 
-	// Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	result = m_Bitmap->Render(m_D3D->GetDeviceContext(), 0, 0);
-	if (!result)
-	{
-		return false;
-	}
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
 	
@@ -411,6 +407,12 @@ bool GraphicsClass::Render()
 	// Turn off the Z buffer to begin all 2D rendering.
 	m_D3D->TurnZBufferOff();
 
+	// Put the bitmap vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	result = m_Bitmap->Render(m_D3D->GetDeviceContext(), 0, 0);
+	if (!result)
+	{
+		return false;
+	}
 
 	// Render the bitmap with the texture shader.
 	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Bitmap->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Bitmap->GetTexture());
@@ -430,7 +432,6 @@ bool GraphicsClass::Render()
 		return false;
 	}
 
-
 	// Turn off alpha blending after rendering the text.
 	m_D3D->TurnOffAlphaBlending();
 
@@ -438,11 +439,16 @@ bool GraphicsClass::Render()
 	m_D3D->TurnZBufferOn();
 
 
+
+
+
+
+
+
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
 	D3DXMatrixRotationY(&worldMatrix, rotation);
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model1->Render(m_D3D->GetDeviceContext());
-
 
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model1->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
@@ -454,11 +460,9 @@ bool GraphicsClass::Render()
 	}
 
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
-	
 	D3DXMatrixRotationX(&worldMatrix, rotation);
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model2->Render(m_D3D->GetDeviceContext());
-
 
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model2->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
@@ -468,7 +472,6 @@ bool GraphicsClass::Render()
 	{
 		return false;
 	}
-
 
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
 	D3DXMatrixRotationX(&worldMatrix, rotation_);
@@ -517,7 +520,6 @@ bool GraphicsClass::Render()
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model6->Render(m_D3D->GetDeviceContext());
 
-
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Model6->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
 		m_Model6->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
@@ -526,8 +528,6 @@ bool GraphicsClass::Render()
 	{
 		return false;
 	}
-
-
 
 	// Present the rendered scene to the screen.
 	m_D3D->EndScene();

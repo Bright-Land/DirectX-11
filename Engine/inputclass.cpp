@@ -298,8 +298,6 @@ bool InputClass::CameraFixed()
 		return FALSE;
 }
 
-
-
 void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 {
 	mouseX = m_mouseX;

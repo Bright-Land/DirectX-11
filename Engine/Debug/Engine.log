@@ -1,21 +1,3 @@
-﻿  timerclass.cpp
-  Textureshaderclass.cpp
-  Lightshaderclass.cpp
-  textureclass.cpp
-  textclass.cpp
-  systemclass.cpp
-  modelclass.cpp
-  main.cpp
-  Lightclass.cpp
-  inputclass.cpp
-  graphicsclass.cpp
-  fpsclass.cpp
-  fontshaderclass.cpp
-  fontclass.cpp
-  d3dclass.cpp
-  cpuclass.cpp
-  cameraclass.cpp
-  Bitmapclass.cpp
-  코드를 생성하고 있습니다...
-  Engine.vcxproj -> C:\Users\B409_13\Desktop\Engine\Debug\Engine.exe
-  Engine.vcxproj -> C:\Users\B409_13\Desktop\Engine\Debug\Engine.pdb (Full PDB)
+﻿  graphicsclass.cpp
+  Engine.vcxproj -> C:\Users\백환기\Desktop\Engine\Debug\Engine.exe
+  Engine.vcxproj -> C:\Users\백환기\Desktop\Engine\Debug\Engine.pdb (Full PDB)
