@@ -45,15 +45,14 @@ public:
 private:
 	D3DClass* m_D3D;
 	CameraClass* m_Camera;
+
+	// For Bitmap
+	CameraClass* m_Camera_;
 	
 	TextureShaderClass* m_TextureShader;
 	
-	ModelClass* m_Model1;
-	ModelClass* m_Model2;
-	ModelClass* m_Model3;
-	ModelClass* m_Model4;
-	ModelClass* m_Model5;
-	ModelClass* m_Model6;
+	ModelClass* m_Model1;	ModelClass* m_Model2;	ModelClass* m_Model3;
+	ModelClass* m_Model4;	ModelClass* m_Model5;	ModelClass* m_Model6;
 
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;

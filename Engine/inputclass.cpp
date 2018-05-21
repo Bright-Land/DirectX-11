@@ -221,7 +221,7 @@ void InputClass::ProcessInput()
 	return;
 }
 
-
+	#pragma region KeyInput
 bool InputClass::IsEscapePressed()
 {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
@@ -297,6 +297,7 @@ bool InputClass::CameraFixed()
 	else
 		return FALSE;
 }
+#pragma endregion
 
 void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 {

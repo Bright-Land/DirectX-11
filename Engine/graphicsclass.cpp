@@ -6,20 +6,17 @@
 
 GraphicsClass::GraphicsClass()
 {
+	#pragma region Member
 	m_D3D = 0;
-	m_Camera = 0;
+	m_Camera = 0;	m_Camera_ = 0;
 	m_TextureShader = 0;
-	m_Model1 = 0;
-	m_Model2 = 0;
-	m_Model3 = 0;
-	m_Model4 = 0;
-	m_Model5 = 0;
-	m_Model6 = 0;
+	m_Model1 = 0;	m_Model2 = 0;	m_Model3 = 0;
+	m_Model4 = 0;	m_Model5 = 0;	m_Model6 = 0;
 	m_LightShader = 0;
 	m_Light = 0;
-
 	m_Bitmap = 0;
 	m_Text = 0;
+#pragma endregion
 }
 
 
@@ -38,6 +35,10 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	bool result;
 	D3DXMATRIX baseViewMatrix;
 
+	#pragma region m_D3D
+
+
+
 	// Create the Direct3D object.
 	m_D3D = new D3DClass;
 	if (!m_D3D)
@@ -52,7 +53,9 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize Direct3D.", L"Error", MB_OK);
 		return false;
 	}
+#pragma endregion
 
+	#pragma region m_Camera
 	// Create the camera object.
 	m_Camera = new CameraClass;
 	if (!m_Camera)
@@ -65,6 +68,18 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Camera->Render();
 	m_Camera->GetViewMatrix(baseViewMatrix);
 
+	m_Camera_ = new CameraClass;
+	if (!m_Camera_)
+	{
+		return false;
+	}
+	// Set the initial position of the camera.
+	m_Camera_->SetPosition(0.0f, 0.0f, -10.0f);
+	m_Camera_->Render();
+	m_Camera_->GetViewMatrix(baseViewMatrix);
+#pragma endregion
+
+	#pragma region m_Text & m_TextShader
 	// Create the text object.
 	m_Text = new TextClass;
 	if (!m_Text)
@@ -94,7 +109,9 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the texture shader object.", L"Error", MB_OK);
 		return false;
 	}
+#pragma endregion
 
+	#pragma region m_Bitmap
 	// Create the bitmap object.
 	m_Bitmap = new BitmapClass;
 	if (!m_Bitmap)
@@ -109,7 +126,9 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the bitmap object.", L"Error", MB_OK);
 		return false;
 	}
+#pragma endregion
 
+	#pragma region m_Model1~6
 	// Create the model object.
 	m_Model1 = new ModelClass;
 	if (!m_Model1)
@@ -199,7 +218,9 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
+#pragma endregion
 
+	#pragma region m_Light & LightShader
 	// Create the light shader object.
 	m_LightShader = new LightShaderClass;
 	if (!m_LightShader)
@@ -228,6 +249,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Light->SetDirection(0.35f, 0.35f, 1.0f);
 	m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
 	m_Light->SetSpecularPower(60.0f);
+#pragma endregion
 
 	return true;
 }
@@ -235,6 +257,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 void GraphicsClass::Shutdown()
 {
+	#pragma region Shutdown
 	// Release the light object.
 	if (m_Light)
 	{
@@ -305,6 +328,12 @@ void GraphicsClass::Shutdown()
 		m_Camera = 0;
 	}
 
+	if (m_Camera_)
+	{
+		delete m_Camera_;
+		m_Camera_ = 0;
+	}
+
 	// Release the D3D object.
 	if (m_D3D)
 	{
@@ -336,12 +365,19 @@ void GraphicsClass::Shutdown()
 		delete m_Text;
 		m_Text = 0;
 	}
+#pragma endregion
 }
 
+/*
+	Frame 함수가 unity의 update함수와 같은 역할이라고 보면 됨.
+	대부분의 반복되는 작업들이 대부분 이 안에 들어있음.
+	인수가 조금 많지만, 카메라를 움직이게 하려면 어쩔수 없음
+*/
 bool GraphicsClass::Frame(int fps, int cpu, float frameTime, int mouseX, int mouseY, float left, float right, float front, float behind, float up, float down)
 {
 	bool result;
 
+	#pragma region UI information
 	// Set the location of the mouse.
 	result = m_Text->SetMousePosition(mouseX, mouseY, m_D3D->GetDeviceContext());
 	if (!result)
@@ -362,21 +398,25 @@ bool GraphicsClass::Frame(int fps, int cpu, float frameTime, int mouseX, int mou
 	{
 		return false;
 	}
+#pragma endregion
 
 	// Set the position of the camera.
 	m_Camera->SetPosition(left + right, up + down, -8.0f+ front + behind);
-
+	
 	// 마우스가 화면에 닿으면 안 움직이는 것은 정상임. 이건 따로 고칠 필요 없음.
 	m_Camera->SetRotation((mouseY - 600) * 0.25f, (mouseX - 960) * 0.25f , 0.0f);	
+
+	m_Camera_->SetPosition(0.0f, 0.0f, -10.0f);
 
 	return true;
 }
 
 bool GraphicsClass::Render()
 {
-	D3DXMATRIX worldMatrix, localMatrix, viewMatrix, projectionMatrix, orthoMatrix;
+	D3DXMATRIX worldMatrix, localMatrix, viewMatrix, viewMatrix_, projectionMatrix, orthoMatrix;
 	bool result;
 
+	#pragma region rotation
 	static float rotation = 0.0f;
 	static float rotation_ = 0.0f;
 
@@ -391,19 +431,23 @@ bool GraphicsClass::Render()
 	{
 		rotation -= 360.0f;
 	}
+#pragma endregion
 
 	// Clear the buffers to begin the scene.
-	m_D3D->BeginScene(0.5f, 0.5f, 0.8f, 1.0f);
+	m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
-	
+	m_Camera_->Render();
+
 	// Get the view, projection, and world matrices from the camera and D3D objects.
 	m_Camera->GetViewMatrix(viewMatrix);
+	m_Camera_->GetViewMatrix(viewMatrix_);
 	m_D3D->GetWorldMatrix(worldMatrix);
 	m_D3D->GetProjectionMatrix(projectionMatrix);
 	m_D3D->GetOrthoMatrix(orthoMatrix);
 
+	#pragma region 2DRendering
 	// Turn off the Z buffer to begin all 2D rendering.
 	m_D3D->TurnZBufferOff();
 
@@ -415,12 +459,11 @@ bool GraphicsClass::Render()
 	}
 
 	// Render the bitmap with the texture shader.
-	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Bitmap->GetIndexCount(), worldMatrix, viewMatrix, orthoMatrix, m_Bitmap->GetTexture());
+	result = m_TextureShader->Render(m_D3D->GetDeviceContext(), m_Bitmap->GetIndexCount(), worldMatrix, viewMatrix_, orthoMatrix, m_Bitmap->GetTexture());
 	if (!result)
 	{
 		return false;
 	}
-
 
 	// Turn on the alpha blending before rendering the text.
 	m_D3D->TurnOnAlphaBlending();
@@ -437,14 +480,9 @@ bool GraphicsClass::Render()
 
 	// Turn the Z buffer back on now that all 2D rendering has completed.
 	m_D3D->TurnZBufferOn();
-
-
-
-
-
-
-
-
+#pragma endregion
+	
+	#pragma region 3DRendering
 	// Rotate the world matrix by the rotation value so that the triangle will spin.
 	D3DXMatrixRotationY(&worldMatrix, rotation);
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
@@ -528,6 +566,8 @@ bool GraphicsClass::Render()
 	{
 		return false;
 	}
+
+#pragma endregion
 
 	// Present the rendered scene to the screen.
 	m_D3D->EndScene();
