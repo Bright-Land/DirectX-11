@@ -16,7 +16,7 @@ GraphicsClass::GraphicsClass()
 	m_Light = 0;
 	m_Bitmap = 0;
 	m_Text = 0;
-#pragma endregion
+	#pragma endregion
 }
 
 
@@ -37,8 +37,6 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 
 	#pragma region m_D3D
 
-
-
 	// Create the Direct3D object.
 	m_D3D = new D3DClass;
 	if (!m_D3D)
@@ -53,7 +51,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize Direct3D.", L"Error", MB_OK);
 		return false;
 	}
-#pragma endregion
+	#pragma endregion
 
 	#pragma region m_Camera
 	// Create the camera object.
@@ -77,7 +75,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Camera_->SetPosition(0.0f, 0.0f, -10.0f);
 	m_Camera_->Render();
 	m_Camera_->GetViewMatrix(baseViewMatrix);
-#pragma endregion
+	#pragma endregion
 
 	#pragma region m_Text & m_TextShader
 	// Create the text object.
@@ -109,7 +107,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the texture shader object.", L"Error", MB_OK);
 		return false;
 	}
-#pragma endregion
+	#pragma endregion
 
 	#pragma region m_Bitmap
 	// Create the bitmap object.
@@ -126,7 +124,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the bitmap object.", L"Error", MB_OK);
 		return false;
 	}
-#pragma endregion
+	#pragma endregion
 
 	#pragma region m_Model1~6
 	// Create the model object.
@@ -218,7 +216,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
-#pragma endregion
+	#pragma endregion
 
 	#pragma region m_Light & LightShader
 	// Create the light shader object.
@@ -249,7 +247,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Light->SetDirection(0.35f, 0.35f, 1.0f);
 	m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
 	m_Light->SetSpecularPower(60.0f);
-#pragma endregion
+	#pragma endregion
 
 	return true;
 }
@@ -365,7 +363,7 @@ void GraphicsClass::Shutdown()
 		delete m_Text;
 		m_Text = 0;
 	}
-#pragma endregion
+	#pragma endregion
 }
 
 /*
@@ -398,7 +396,7 @@ bool GraphicsClass::Frame(int fps, int cpu, float frameTime, int mouseX, int mou
 	{
 		return false;
 	}
-#pragma endregion
+	#pragma endregion
 
 	// Set the position of the camera.
 	m_Camera->SetPosition(left + right, up + down, -8.0f+ front + behind);
@@ -413,7 +411,7 @@ bool GraphicsClass::Frame(int fps, int cpu, float frameTime, int mouseX, int mou
 
 bool GraphicsClass::Render()
 {
-	D3DXMATRIX worldMatrix, localMatrix, viewMatrix, viewMatrix_, projectionMatrix, orthoMatrix;
+	D3DXMATRIX worldMatrix, localMatrix, viewMatrix, viewMatrix_, projectionMatrix, orthoMatrix, translate, scale;
 	bool result;
 
 	#pragma region rotation
@@ -431,17 +429,19 @@ bool GraphicsClass::Render()
 	{
 		rotation -= 360.0f;
 	}
-#pragma endregion
+	#pragma endregion
 
 	// Clear the buffers to begin the scene.
 	m_D3D->BeginScene(0.0f, 0.0f, 0.0f, 1.0f);
 
 	// Generate the view matrix based on the camera's position.
 	m_Camera->Render();
+	// for a bitmap
 	m_Camera_->Render();
 
 	// Get the view, projection, and world matrices from the camera and D3D objects.
 	m_Camera->GetViewMatrix(viewMatrix);
+	// for a bitmap
 	m_Camera_->GetViewMatrix(viewMatrix_);
 	m_D3D->GetWorldMatrix(worldMatrix);
 	m_D3D->GetProjectionMatrix(projectionMatrix);
@@ -480,11 +480,22 @@ bool GraphicsClass::Render()
 
 	// Turn the Z buffer back on now that all 2D rendering has completed.
 	m_D3D->TurnZBufferOn();
-#pragma endregion
+	#pragma endregion
 	
 	#pragma region 3DRendering
-	// Rotate the world matrix by the rotation value so that the triangle will spin.
+
+	// D3DXMatrix
+	/*
+		Translation으로 object의 위치를 조정하고,
+		Scaling으로 object의 크기를 조정하고,
+		worldMatrix값을 재설정해준다.
+	*/
+
+	D3DXMatrixTranslation(&translate, 5.0f, 0.0f, 0.0f);
+	D3DXMatrixScaling(&scale, 0.25f, 0.25f, 0.25f);
 	D3DXMatrixRotationY(&worldMatrix, rotation);
+	worldMatrix = worldMatrix * translate * scale;
+
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model1->Render(m_D3D->GetDeviceContext());
 
@@ -497,8 +508,10 @@ bool GraphicsClass::Render()
 		return false;
 	}
 
-	// Rotate the world matrix by the rotation value so that the triangle will spin.
-	D3DXMatrixRotationX(&worldMatrix, rotation);
+	D3DXMatrixTranslation(&translate, -5.0f, 0.0f, 0.0f);
+	D3DXMatrixScaling(&scale, 0.125f, 0.125f, 0.125f);
+	D3DXMatrixRotationY(&worldMatrix, rotation);
+	worldMatrix = worldMatrix * translate * scale;
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model2->Render(m_D3D->GetDeviceContext());
 
@@ -511,8 +524,11 @@ bool GraphicsClass::Render()
 		return false;
 	}
 
-	// Rotate the world matrix by the rotation value so that the triangle will spin.
-	D3DXMatrixRotationX(&worldMatrix, rotation_);
+
+	D3DXMatrixTranslation(&translate, 0.0f, 10.0f, 0.0f);
+	D3DXMatrixScaling(&scale, 0.5f, 0.5f, 0.5f);
+	D3DXMatrixRotationY(&worldMatrix, rotation_);
+	worldMatrix = worldMatrix * translate * scale;
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model3->Render(m_D3D->GetDeviceContext());
 
@@ -525,8 +541,10 @@ bool GraphicsClass::Render()
 		return false;
 	}
 
-	// Rotate the world matrix by the rotation value so that the triangle will spin.
-	D3DXMatrixRotationX(&worldMatrix, rotation_);
+	D3DXMatrixTranslation(&translate, 0.0f, -10.0f, 0.0f);
+	D3DXMatrixScaling(&scale, 0.5f, 0.5f, 0.5f);
+	D3DXMatrixRotationY(&worldMatrix, rotation_);
+	worldMatrix = worldMatrix * translate * scale;
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model4->Render(m_D3D->GetDeviceContext());
 
@@ -553,8 +571,10 @@ bool GraphicsClass::Render()
 		return false;
 	}
 
-	// Rotate the world matrix by the rotation value so that the triangle will spin.
+	D3DXMatrixTranslation(&translate, 0.0f, 0.0f, 10.0f);
+	D3DXMatrixScaling(&scale, 0.125f, 0.125f, 0.125f);
 	D3DXMatrixRotationY(&worldMatrix, rotation_);
+	worldMatrix = worldMatrix * translate * scale;
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Model6->Render(m_D3D->GetDeviceContext());
 
