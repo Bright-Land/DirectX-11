@@ -12,10 +12,12 @@ GraphicsClass::GraphicsClass()
 	m_TextureShader = 0;
 	
 	m_Dva1 = 0;	m_Dva2 = 0;	
+	m_Hanzo = 0;
 	m_House1 = 0;	m_House2 = 0;	m_House3 = 0;	m_House4 = 0;	m_House5 = 0;
 
 	m_LightShader = 0;
 	m_Light = 0;
+	m_Light_ = 0;
 	m_Bitmap = 0;
 	m_Text = 0;
 	#pragma endregion
@@ -128,7 +130,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 	#pragma endregion
 
-	#pragma region m_Model1~6
+	#pragma region m_Model
 	// Create the model object.
 	m_Dva1 = new ModelClass;
 	if (!m_Dva1)
@@ -158,6 +160,35 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
+
+	// Create the model object.
+	m_Hanzo = new ModelClass;
+	if (!m_Hanzo)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_Hanzo->Initialize(m_D3D->GetDevice(), "../Engine/data/Hanzo.obj", L"../Engine/data/Hanzo.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	// Create the model object.
 	m_House1 = new ModelClass;
@@ -256,6 +287,8 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+
+	
 	// Create the light object.
 	m_Light = new LightClass;
 	if (!m_Light)
@@ -264,11 +297,26 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the light object.
-	m_Light->SetAmbientColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetDirection(0.35f, 0.35f, 1.0f);
-	m_Light->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
-	m_Light->SetSpecularPower(60.0f);
+	m_Light->SetAmbientColor(0.125f, 0.125f, 0.125f, 0.125f);
+	m_Light->SetDiffuseColor(0.125f, 0.125f, 0.125f, 0.125f);
+	m_Light->SetDirection(-15.0f, -10.0f, 15.0f);
+	m_Light->SetSpecularColor(0.125f, 0.125f, 0.125f, 0.125f);
+	m_Light->SetSpecularPower(850.0f);
+
+	// Create the light object.
+	m_Light_ = new LightClass;
+	if (!m_Light_)
+	{
+		return false;
+	}
+
+	// Initialize the light object.
+	m_Light_->SetAmbientColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light_->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light->SetDirection(-35.0f, -30.0f, 15.0f);
+	m_Light_->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light_->SetSpecularPower(150.0f);
+
 	#pragma endregion
 
 	return true;
@@ -283,6 +331,13 @@ void GraphicsClass::Shutdown()
 	{
 		delete m_Light;
 		m_Light = 0;
+	}
+
+	// Release the light object.
+	if (m_Light_)
+	{
+		delete m_Light_;
+		m_Light_ = 0;
 	}
 
 	// Release the light shader object.
@@ -307,6 +362,14 @@ void GraphicsClass::Shutdown()
 		m_Dva2->Shutdown();
 		delete m_Dva2;
 		m_Dva2 = 0;
+	}
+
+	// Release the model object.
+	if (m_Hanzo)
+	{
+		m_Hanzo->Shutdown();
+		delete m_Hanzo;
+		m_Hanzo = 0;
 	}
 
 	// Release the model object.
@@ -441,7 +504,7 @@ bool GraphicsClass::Frame(int fps, int cpu, float frameTime, int mouseX, int mou
 
 bool GraphicsClass::Render()
 {
-	D3DXMATRIX worldMatrix, localMatrix, viewMatrix, viewMatrix_, projectionMatrix, orthoMatrix, translate, scale;
+	D3DXMATRIX worldMatrix, viewMatrix, viewMatrix_, projectionMatrix, orthoMatrix, translate, scale;
 	bool result;
 
 	#pragma region rotation
@@ -514,13 +577,9 @@ bool GraphicsClass::Render()
 	
 	#pragma region 3DRendering
 
-	// D3DXMatrix
-	/*
-		Translation으로 object의 위치를 조정하고,
-		Scaling으로 object의 크기를 조정하고,
-		worldMatrix값을 재설정해준다.
-	*/
+	#pragma region House
 
+	
 	D3DXMATRIX worldMatrix_House;
 	D3DXMatrixTranslation(&translate, -11.5f, -3.0f, -5.0f);
 	D3DXMatrixScaling(&scale, 1.5f, 1.5f, 1.5f);
@@ -585,16 +644,20 @@ bool GraphicsClass::Render()
 		return false;
 	}
 
+#pragma endregion
+
+	#pragma region DVA
+
 	D3DXMATRIX worldMatrix_Dva;
-	D3DXMatrixTranslation(&translate, 5.0f, -15.0f, -15.0f);
+	D3DXMatrixTranslation(&translate, -215.0f, -110.0f, 315.0f);
 	D3DXMatrixScaling(&scale, 0.0125f, 0.0125f, 0.0125f);
 	worldMatrix_Dva = worldMatrix * translate * scale;
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Dva1->Render(m_D3D->GetDeviceContext());
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Dva1->GetIndexCount(), worldMatrix_Dva, viewMatrix, projectionMatrix,
-		m_Dva1->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+		m_Dva1->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
 	if (!result)
 	{
 		return false;
@@ -605,12 +668,35 @@ bool GraphicsClass::Render()
 
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Dva2->GetIndexCount(), worldMatrix_Dva, viewMatrix, projectionMatrix,
-		m_Dva2->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
+		m_Dva2->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+#pragma endregion
+
+	#pragma region Hanzo
+
+	D3DXMATRIX worldMatrix_Hanzo;
+	D3DXMatrixTranslation(&translate, 215.0f, -110.0f, 315.0f);
+	D3DXMatrixScaling(&scale, 0.0125f, 0.0125f, 0.0125f);
+	worldMatrix_Hanzo = worldMatrix * translate * scale;
+	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
+	m_Hanzo->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Hanzo->GetIndexCount(), worldMatrix_Hanzo, viewMatrix, projectionMatrix,
+		m_Hanzo->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
 		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
 	if (!result)
 	{
 		return false;
 	}
+
+#pragma endregion
+
+
 
 #pragma endregion
 

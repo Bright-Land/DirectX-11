@@ -52,10 +52,13 @@ private:
 	TextureShaderClass* m_TextureShader;
 	
 	ModelClass* m_Dva1;	ModelClass* m_Dva2;
+	ModelClass* m_Hanzo;
 	ModelClass* m_House1;	ModelClass* m_House2;	ModelClass* m_House3;	ModelClass* m_House4;	ModelClass* m_House5;
+	
 
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
+	LightClass* m_Light_;
 	BitmapClass* m_Bitmap;
 	TextClass* m_Text;
 };
