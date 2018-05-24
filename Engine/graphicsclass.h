@@ -51,8 +51,8 @@ private:
 	
 	TextureShaderClass* m_TextureShader;
 	
-	ModelClass* m_Model1;	ModelClass* m_Model2;	ModelClass* m_Model3;
-	ModelClass* m_Model4;	ModelClass* m_Model5;	ModelClass* m_Model6;
+	ModelClass* m_Dva1;	ModelClass* m_Dva2;
+	ModelClass* m_House1;	ModelClass* m_House2;	ModelClass* m_House3;	ModelClass* m_House4;	ModelClass* m_House5;
 
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
