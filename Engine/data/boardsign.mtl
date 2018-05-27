@@ -1,0 +1,60 @@
+#
+#
+#
+
+newmtl Billboard_2 메시_Grill
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.100000 0.100000 0.100000
+Ns 0.000000
+map_Kd Cinema
+
+newmtl Billboard_2 메시_Lamp
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.200000 0.200000 0.200000
+Ns 60.000000
+map_Kd Cinema
+
+newmtl Billboard_2 메시_Lamp_2
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.490000 0.490000 0.490000
+Ns 59.411098
+map_Kd Cinema
+
+newmtl Billboard_2 메시_Red_Metal
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.670000 0.670000 0.670000
+Ns 0.000000
+map_Kd Cinema
+
+newmtl Billboard_2 메시_Wood
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.200000 0.200000 0.200000
+Ns 60.000000
+map_Kd Cinema
+
+newmtl Billboard_2 메시_Wood_2
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.470000 0.470000 0.470000
+Ns 0.000000
+map_Kd Cinema
+
+newmtl ads 메시_Ads
+illum 2
+Ka 0.000000 0.000000 0.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.200000 0.200000 0.200000
+Ns 61.110298
+map_Kd Cinema
+
