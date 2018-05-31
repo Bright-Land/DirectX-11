@@ -14,9 +14,9 @@ GraphicsClass::GraphicsClass()
 	m_Dva1 = 0;	m_Dva2 = 0;	
 	m_Hanzo = 0;
 	m_House1 = 0;	m_House2 = 0;	m_House3 = 0;	m_House4 = 0;	m_House5 = 0;
+
 	m_Boardsign = 0;
 	m_Tile = 0;
-
 	m_Sofa1 = 0;
 	m_chair05 = 0;
 
