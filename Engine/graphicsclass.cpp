@@ -15,10 +15,11 @@ GraphicsClass::GraphicsClass()
 	m_Hanzo = 0;
 	m_House1 = 0;	m_House2 = 0;	m_House3 = 0;	m_House4 = 0;	m_House5 = 0;
 
-	m_Boardsign = 0;
-	m_Tile = 0;
+	m_Boardsign = 0;	m_Furniture2 = 0;
+	m_Tile = 0;			m_Staircase = 0;
 	m_Sofa1 = 0;
 	m_chair05 = 0;
+	m_Bench = 0;
 
 	m_LightShader = 0;
 	m_Light = 0;
@@ -248,6 +249,48 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+	//가구 벤치
+	m_Bench = new ModelClass;
+	if (!m_Bench)
+	{
+		return false;
+	}
+
+	result = m_Bench->Initialize(m_D3D->GetDevice(), "../Engine/data/Bench.obj", L"../Engine/data/Bench.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	//가구 
+	m_Furniture2 = new ModelClass;
+	if (!m_Furniture2)
+	{
+		return false;
+	}
+
+	result = m_Furniture2->Initialize(m_D3D->GetDevice(), "../Engine/data/furniture2.obj", L"../Engine/data/Bench.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	//전시장 2층공간
+	m_Staircase = new ModelClass;
+	if (!m_Staircase)
+	{
+		return false;
+	}
+
+	result = m_Staircase->Initialize(m_D3D->GetDevice(), "../Engine/data/Staircase.obj", L"../Engine/data/glass.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
 
 
 	//건물
@@ -441,7 +484,27 @@ void GraphicsClass::Shutdown()
 		m_chair05 = 0;
 	}
 
+	// Release the model object.
+	if (m_Bench)
+	{
+		m_Bench->Shutdown();
+		delete m_Bench;
+		m_Bench = 0;
+	}
 
+	if (m_Furniture2)
+	{
+		m_Furniture2->Shutdown();
+		delete m_Furniture2;
+		m_Furniture2 = 0;
+	}
+
+	if (m_Staircase)
+	{
+		m_Staircase->Shutdown();
+		delete m_Staircase;
+		m_Staircase = 0;
+	}
 
 	// Release the model object.
 	if (m_Dva1)
@@ -753,9 +816,67 @@ bool GraphicsClass::Render()
 #pragma endregion
 
 
+#pragma region Bench
+
+	D3DXMATRIX worldMatrix_Bench;
+	D3DXMatrixTranslation(&translate, 4.0f, 0.0f, 8.0f);
+	D3DXMatrixScaling(&scale, 0.001f, 0.001f, 0.001f);
+	worldMatrix_Bench = worldMatrix * translate * scale;
+
+	m_Bench->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Bench->GetIndexCount(), worldMatrix_Bench, viewMatrix, projectionMatrix,
+		m_Bench->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
 
 
-	#pragma region House
+#pragma endregion
+
+#pragma region Furniture2
+
+	D3DXMATRIX worldMatrix_Furniture2;
+	D3DXMatrixTranslation(&translate, 4.0f, 0.0f, 200.0f);
+	D3DXMatrixScaling(&scale, 0.02f, 0.02f, 0.02f);
+	worldMatrix_Furniture2 = worldMatrix * translate * scale;
+
+	m_Furniture2->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Furniture2->GetIndexCount(), worldMatrix_Furniture2, viewMatrix, projectionMatrix,
+		m_Furniture2->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+#pragma endregion
+
+#pragma region Staircase
+
+	D3DXMATRIX worldMatrix_Staircase;
+	D3DXMatrixTranslation(&translate, 4.0f, -10.0f, 100.0f);
+	D3DXMatrixScaling(&scale, 0.50f, 0.30f, 0.30f);
+	worldMatrix_Staircase = worldMatrix * translate * scale;
+
+	m_Staircase->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Staircase->GetIndexCount(), worldMatrix_Staircase, viewMatrix, projectionMatrix,
+		m_Staircase->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+#pragma endregion
+
+
+
+
+#pragma region House
 
 	
 	//D3DXMATRIX worldMatrix_House;

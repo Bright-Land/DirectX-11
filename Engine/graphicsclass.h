@@ -55,9 +55,12 @@ private:
 	ModelClass* m_Hanzo;
 	ModelClass* m_House1;	ModelClass* m_House2;	ModelClass* m_House3;	ModelClass* m_House4;	ModelClass* m_House5;
 	ModelClass* m_Boardsign;
-	ModelClass* m_Tile;
+	ModelClass* m_Tile;					
 	ModelClass* m_Sofa1;
 	ModelClass* m_chair05;
+	ModelClass* m_Bench;
+	ModelClass* m_Furniture2;
+	ModelClass*m_Staircase;
 
 
 	LightShaderClass* m_LightShader;

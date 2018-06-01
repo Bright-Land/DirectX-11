@@ -1,21 +1,3 @@
-﻿  timerclass.cpp
-  Textureshaderclass.cpp
-  Lightshaderclass.cpp
-  textureclass.cpp
-  textclass.cpp
-  systemclass.cpp
-  modelclass.cpp
-  main.cpp
-  Lightclass.cpp
-  inputclass.cpp
-  graphicsclass.cpp
-  fpsclass.cpp
-  fontshaderclass.cpp
-  fontclass.cpp
-  d3dclass.cpp
-  cpuclass.cpp
-  cameraclass.cpp
-  Bitmapclass.cpp
-  코드를 생성하고 있습니다...
+﻿  graphicsclass.cpp
   Engine.vcxproj -> C:\Users\uty\Documents\GitHub\DirectxLastProject\Engine\Debug\Engine.exe
   Engine.vcxproj -> C:\Users\uty\Documents\GitHub\DirectxLastProject\Engine\Debug\Engine.pdb (Full PDB)
