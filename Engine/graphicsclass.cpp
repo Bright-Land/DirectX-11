@@ -270,7 +270,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-	result = m_Furniture2->Initialize(m_D3D->GetDevice(), "../Engine/data/furniture2.obj", L"../Engine/data/Bench.dds");
+	result = m_Furniture2->Initialize(m_D3D->GetDevice(), "../Engine/data/furniture2.obj", L"../Engine/data/iron2.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -797,8 +797,8 @@ bool GraphicsClass::Render()
 
 #pragma region chair05
 	D3DXMATRIX worldMatrix_chair05;
-	D3DXMatrixTranslation(&translate, 4.0f, -80.0f, 6.0f);
-	D3DXMatrixScaling(&scale, 0.02f, 0.02f, 0.02f);
+	D3DXMatrixTranslation(&translate, -110.0f, 120.0f, -610.0f);
+	D3DXMatrixScaling(&scale, 0.05f, 0.05f, 0.05f);
 	worldMatrix_chair05 = worldMatrix * translate * scale;
 
 	m_chair05->Render(m_D3D->GetDeviceContext());
@@ -819,7 +819,7 @@ bool GraphicsClass::Render()
 #pragma region Bench
 
 	D3DXMATRIX worldMatrix_Bench;
-	D3DXMatrixTranslation(&translate, 4.0f, 0.0f, 8.0f);
+	D3DXMatrixTranslation(&translate, -5004.0f, 6000.0f, -33000.0f);
 	D3DXMatrixScaling(&scale, 0.001f, 0.001f, 0.001f);
 	worldMatrix_Bench = worldMatrix * translate * scale;
 
@@ -839,7 +839,7 @@ bool GraphicsClass::Render()
 #pragma region Furniture2
 
 	D3DXMATRIX worldMatrix_Furniture2;
-	D3DXMatrixTranslation(&translate, 4.0f, 0.0f, 200.0f);
+	D3DXMatrixTranslation(&translate, 4.0f, 100.0f, -1200.0f);
 	D3DXMatrixScaling(&scale, 0.02f, 0.02f, 0.02f);
 	worldMatrix_Furniture2 = worldMatrix * translate * scale;
 
@@ -858,7 +858,7 @@ bool GraphicsClass::Render()
 #pragma region Staircase
 
 	D3DXMATRIX worldMatrix_Staircase;
-	D3DXMatrixTranslation(&translate, 4.0f, -10.0f, 100.0f);
+	D3DXMatrixTranslation(&translate, 4.0f, -7.0f, -100.0f);
 	D3DXMatrixScaling(&scale, 0.50f, 0.30f, 0.30f);
 	worldMatrix_Staircase = worldMatrix * translate * scale;
 
