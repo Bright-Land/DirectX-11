@@ -53,14 +53,19 @@ private:
 	
 	ModelClass* m_Dva1;	ModelClass* m_Dva2;
 	ModelClass* m_Hanzo;
-	ModelClass* m_House1;	ModelClass* m_House2;	ModelClass* m_House3;	ModelClass* m_House4;	ModelClass* m_House5;
+	
 	ModelClass* m_Boardsign;
 	ModelClass* m_Tile;					
 	ModelClass* m_Sofa1;
 	ModelClass* m_chair05;
-	ModelClass* m_Bench;
+	ModelClass* m_Bench2;
 	ModelClass* m_Furniture2;
 	ModelClass*m_Staircase;
+	ModelClass* m_Lamp;
+	ModelClass* m_Desk;
+	ModelClass* m_Wood_desk;
+	ModelClass* m_woodStand;
+	ModelClass* m_computer_table;
 
 
 	LightShaderClass* m_LightShader;

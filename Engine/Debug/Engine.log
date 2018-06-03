@@ -1,3 +1,5 @@
 ﻿  graphicsclass.cpp
+  main.cpp
+  systemclass.cpp
   Engine.vcxproj -> C:\Users\uty\Documents\GitHub\DirectxLastProject\Engine\Debug\Engine.exe
   Engine.vcxproj -> C:\Users\uty\Documents\GitHub\DirectxLastProject\Engine\Debug\Engine.pdb (Full PDB)

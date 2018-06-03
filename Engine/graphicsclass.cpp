@@ -13,13 +13,13 @@ GraphicsClass::GraphicsClass()
 	
 	m_Dva1 = 0;	m_Dva2 = 0;	
 	m_Hanzo = 0;
-	m_House1 = 0;	m_House2 = 0;	m_House3 = 0;	m_House4 = 0;	m_House5 = 0;
 
 	m_Boardsign = 0;	m_Furniture2 = 0;
 	m_Tile = 0;			m_Staircase = 0;
-	m_Sofa1 = 0;
-	m_chair05 = 0;
-	m_Bench = 0;
+	m_Sofa1 = 0;		m_Desk = 0;		
+	m_chair05 = 0;		m_Wood_desk = 0;
+	m_Lamp = 0;			m_woodStand = 0;
+	m_Bench2 = 0;		m_computer_table = 0;
 
 	m_LightShader = 0;
 	m_Light = 0;
@@ -249,19 +249,21 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-	//가구 벤치
-	m_Bench = new ModelClass;
-	if (!m_Bench)
+
+	//가구 벤치2
+	m_Bench2 = new ModelClass;
+	if (!m_Bench2)
 	{
 		return false;
 	}
 
-	result = m_Bench->Initialize(m_D3D->GetDevice(), "../Engine/data/Bench.obj", L"../Engine/data/Bench.dds");
+	result = m_Bench2->Initialize(m_D3D->GetDevice(), "../Engine/data/bench2.obj", L"../Engine/data/bench2.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
+
 
 	//가구 
 	m_Furniture2 = new ModelClass;
@@ -291,78 +293,28 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-
-
-	//건물
-	// Create the model object.
-	m_House1 = new ModelClass;
-	if (!m_House1)
+	//램프
+	m_Lamp = new ModelClass;
+	if (!m_Lamp)
 	{
 		return false;
 	}
 
-	// Initialize the model object.
-	result = m_House1->Initialize(m_D3D->GetDevice(), "../Engine/data/House_Bottom.obj", L"../Engine/data/House_Bottom.dds");
+	result = m_Lamp->Initialize(m_D3D->GetDevice(), "../Engine/data/lamp.obj", L"../Engine/data/lamp.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
 
-	// Create the model object.
-	m_House2 = new ModelClass;
-	if (!m_House2)
+	//책상
+	m_Desk = new ModelClass;
+	if (!m_Desk)
 	{
 		return false;
 	}
 
-	// Initialize the model object.
-	result = m_House2->Initialize(m_D3D->GetDevice(), "../Engine/data/House_House.obj", L"../Engine/data/House_House.dds");
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-		return false;
-	}
-
-	// Create the model object.
-	m_House3 = new ModelClass;
-	if (!m_House3)
-	{
-		return false;
-	}
-
-	// Initialize the model object.
-	result = m_House3->Initialize(m_D3D->GetDevice(), "../Engine/data/House_House_Top.obj", L"../Engine/data/House_House_Top.dds");
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-		return false;
-	}
-
-	// Create the model object.
-	m_House4 = new ModelClass;
-	if (!m_House4)
-	{
-		return false;
-	}
-
-	// Initialize the model object.
-	result = m_House4->Initialize(m_D3D->GetDevice(), "../Engine/data/House_Wall.obj", L"../Engine/data/House_Wall.dds");
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-		return false;
-	}
-
-	// Create the model object.
-	m_House5 = new ModelClass;
-	if (!m_House5)
-	{
-		return false;
-	}
-
-	// Initialize the model object.
-	result = m_House5->Initialize(m_D3D->GetDevice(), "../Engine/data/House_Water.obj", L"../Engine/data/House_Water.dds");
+	result = m_Desk->Initialize(m_D3D->GetDevice(), "../Engine/data/desk.obj", L"../Engine/data/desk.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -370,7 +322,47 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 
+	//나무책상
+	m_Wood_desk = new ModelClass;
+	if (!m_Wood_desk)
+	{
+		return false;
+	}
 
+	result = m_Wood_desk->Initialize(m_D3D->GetDevice(), "../Engine/data/woodDesk.obj", L"../Engine/data/woodDesk.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	//화이트우드 서랍장
+	m_woodStand = new ModelClass;
+	if (!m_woodStand)
+	{
+		return false;
+	}
+
+	result = m_woodStand->Initialize(m_D3D->GetDevice(), "../Engine/data/Woodstand.obj", L"../Engine/data/Woodstand.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	//컴퓨터 테이블
+	m_computer_table = new ModelClass;
+	if (!m_computer_table)
+	{
+		return false;
+	}
+
+	result = m_computer_table->Initialize(m_D3D->GetDevice(), "../Engine/data/computerTable.obj", L"../Engine/data/computerTable.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
 
 
 	#pragma endregion
@@ -484,14 +476,6 @@ void GraphicsClass::Shutdown()
 		m_chair05 = 0;
 	}
 
-	// Release the model object.
-	if (m_Bench)
-	{
-		m_Bench->Shutdown();
-		delete m_Bench;
-		m_Bench = 0;
-	}
-
 	if (m_Furniture2)
 	{
 		m_Furniture2->Shutdown();
@@ -504,6 +488,41 @@ void GraphicsClass::Shutdown()
 		m_Staircase->Shutdown();
 		delete m_Staircase;
 		m_Staircase = 0;
+	}
+
+	if (m_Lamp)
+	{
+		m_Lamp->Shutdown();
+		delete m_Lamp;
+		m_Lamp = 0;
+	}
+
+	if (m_Desk)
+	{
+		m_Desk->Shutdown();
+		delete m_Desk;
+		m_Desk = 0;
+	}
+
+	if (m_Wood_desk)
+	{
+		m_Wood_desk->Shutdown();
+		delete m_Wood_desk;
+		m_Wood_desk = 0;
+	}
+
+	if (m_woodStand)
+	{
+		m_woodStand->Shutdown();
+		delete m_woodStand;
+		m_woodStand = 0;
+	}
+
+	if (m_computer_table)
+	{
+		m_computer_table->Shutdown();
+		delete m_computer_table;
+		m_computer_table = 0;
 	}
 
 	// Release the model object.
@@ -528,46 +547,6 @@ void GraphicsClass::Shutdown()
 		m_Hanzo->Shutdown();
 		delete m_Hanzo;
 		m_Hanzo = 0;
-	}
-
-	// Release the model object.
-	if (m_House1)
-	{
-		m_House1->Shutdown();
-		delete m_House1;
-		m_House1 = 0;
-	}
-
-	// Release the model object.
-	if (m_House2)
-	{
-		m_House2->Shutdown();
-		delete m_House2;
-		m_House2 = 0;
-	}
-
-	// Release the model object.
-	if (m_House3)
-	{
-		m_House3->Shutdown();
-		delete m_House3;
-		m_House3 = 0;
-	}
-
-	// Release the model object.
-	if (m_House4)
-	{
-		m_House4->Shutdown();
-		delete m_House4;
-		m_House4 = 0;
-	}
-
-	// Release the model object.
-	if (m_House5)
-	{
-		m_House5->Shutdown();
-		delete m_House5;
-		m_House5 = 0;
 	}
 
 	// Release the camera object.
@@ -815,26 +794,26 @@ bool GraphicsClass::Render()
 
 #pragma endregion
 
+#pragma region Bench2
 
-#pragma region Bench
+	D3DXMATRIX worldMatrix_Bench2;
+	D3DXMatrixTranslation(&translate, -10.0f, -2.0f, -35.0f);
+	D3DXMatrixScaling(&scale, 0.7f, 0.7f, 0.7f);
+	worldMatrix_Bench2 = worldMatrix * translate * scale;
 
-	D3DXMATRIX worldMatrix_Bench;
-	D3DXMatrixTranslation(&translate, -5004.0f, 6000.0f, -33000.0f);
-	D3DXMatrixScaling(&scale, 0.001f, 0.001f, 0.001f);
-	worldMatrix_Bench = worldMatrix * translate * scale;
-
-	m_Bench->Render(m_D3D->GetDeviceContext());
+	m_Bench2->Render(m_D3D->GetDeviceContext());
 	// Render the model using the light shader.
-	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Bench->GetIndexCount(), worldMatrix_Bench, viewMatrix, projectionMatrix,
-		m_Bench->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Bench2->GetIndexCount(), worldMatrix_Bench2, viewMatrix, projectionMatrix,
+		m_Bench2->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
 		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
 	if (!result)
 	{
 		return false;
 	}
 
-
 #pragma endregion
+
+
 
 #pragma region Furniture2
 
@@ -873,77 +852,103 @@ bool GraphicsClass::Render()
 	}
 #pragma endregion
 
+#pragma region Lamp
 
+	D3DXMATRIX worldMatrix_Lamp;
+	D3DXMatrixTranslation(&translate, 4.0f, 10.0f, -40.0f);
+	D3DXMatrixScaling(&scale, 0.4f, 0.4f, 0.4f);
+	worldMatrix_Lamp = worldMatrix * translate * scale;
 
-
-#pragma region House
-
-	
-	//D3DXMATRIX worldMatrix_House;
-	//D3DXMatrixTranslation(&translate, -11.5f, -3.0f, -5.0f);
-	//D3DXMatrixScaling(&scale, 1.5f, 1.5f, 1.5f);
-	//worldMatrix_House = worldMatrix * translate * scale;
-	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//m_House1->Render(m_D3D->GetDeviceContext());
-
-	//// Render the model using the light shader.
-	//result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House1->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-	//	m_House1->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-	//	m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
-	//if (!result)
-	//{
-	//	return false;
-	//}
-
-	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//m_House2->Render(m_D3D->GetDeviceContext());
-
-	//// Render the model using the light shader.
-	//result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House2->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-	//	m_House2->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-	//	m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
-	//if (!result)
-	//{
-	//	return false;
-	//}
-
-	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//m_House3->Render(m_D3D->GetDeviceContext());
-
-	//// Render the model using the light shader.
-	//result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House3->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-	//	m_House3->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-	//	m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
-	//if (!result)
-	//{
-	//	return false;
-	//}
-
-	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//m_House4->Render(m_D3D->GetDeviceContext());
-
-	//// Render the model using the light shader.
-	//result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House4->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-	//	m_House4->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-	//	m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
-	//if (!result)
-	//{
-	//	return false;
-	//}
-
-	//// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	//m_House5->Render(m_D3D->GetDeviceContext());
-
-	//// Render the model using the light shader.
-	//result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House5->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-	//	m_House5->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-	//	m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
-	//if (!result)
-	//{
-	//	return false;
-	//}
+	m_Lamp->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Lamp->GetIndexCount(), worldMatrix_Lamp, viewMatrix, projectionMatrix,
+		m_Lamp->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
 
 #pragma endregion
+
+
+#pragma region Desk
+
+	D3DXMATRIX worldMatrix_Desk;
+	D3DXMatrixTranslation(&translate, -4.0f, -0.5f, -10.0f);
+	D3DXMatrixScaling(&scale, 1.0f, 1.0f, 1.0f);
+	worldMatrix_Desk = worldMatrix * translate * scale;
+
+	m_Desk->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Desk->GetIndexCount(), worldMatrix_Desk, viewMatrix, projectionMatrix,
+		m_Desk->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+#pragma endregion
+
+#pragma region wood_desk
+
+	D3DXMATRIX worldMatrix_Wood_desk;
+	D3DXMatrixTranslation(&translate, 4.0f, -1.5f, -8.0f);
+	D3DXMatrixScaling(&scale, 0.5f, 0.5f, 0.5f);
+	worldMatrix_Wood_desk = worldMatrix * translate * scale;
+
+	m_Wood_desk->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Wood_desk->GetIndexCount(), worldMatrix_Wood_desk, viewMatrix, projectionMatrix,
+		m_Wood_desk->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+#pragma endregion
+
+#pragma region woodStand
+
+	D3DXMATRIX worldMatrix_Wood_stand;
+	D3DXMatrixTranslation(&translate, -8.0f, 0.0f, -8.0f);
+	D3DXMatrixScaling(&scale, 1.0f, 1.0f, 1.0f);
+	worldMatrix_Wood_stand = worldMatrix * translate * scale;
+
+	m_woodStand->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_woodStand->GetIndexCount(), worldMatrix_Wood_stand, viewMatrix, projectionMatrix,
+		m_woodStand->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+#pragma endregion
+
+#pragma region computer_table
+
+	D3DXMATRIX worldMatrix_computer_table;
+	D3DXMatrixTranslation(&translate, -4.0f, 0.0f, -18.0f);
+	D3DXMatrixScaling(&scale, 1.0f, 1.0f, 1.0f);
+	worldMatrix_computer_table = worldMatrix * translate * scale;
+
+	m_computer_table->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_computer_table->GetIndexCount(), worldMatrix_computer_table, viewMatrix, projectionMatrix,
+		m_computer_table->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+#pragma endregion
+
+
 
 	#pragma region DVA
 
