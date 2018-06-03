@@ -20,8 +20,7 @@ GraphicsClass::GraphicsClass()
 	m_chair05 = 0;		m_Wood_desk = 0;
 	m_Lamp = 0;			m_woodStand = 0;
 	m_Bench2 = 0;		m_computer_table = 0;
-
-	m_LightShader = 0;
+	m_LightShader = 0;  m_Metal_desk = 0;
 	m_Light = 0;
 	m_Light_ = 0;
 	m_Bitmap = 0;
@@ -364,6 +363,18 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
+	m_Metal_desk = new ModelClass;
+	if (!m_Metal_desk)
+	{
+		return false;
+	}
+
+	result = m_Metal_desk->Initialize(m_D3D->GetDevice(), "../Engine/data/MetalDesk.obj", L"../Engine/data/MetalDesk.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
 
 	#pragma endregion
 
@@ -523,6 +534,13 @@ void GraphicsClass::Shutdown()
 		m_computer_table->Shutdown();
 		delete m_computer_table;
 		m_computer_table = 0;
+	}
+
+	if (m_Metal_desk)
+	{
+		m_Metal_desk->Shutdown();
+		delete m_Metal_desk;
+		m_Metal_desk = 0;
 	}
 
 	// Release the model object.
@@ -940,6 +958,25 @@ bool GraphicsClass::Render()
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_computer_table->GetIndexCount(), worldMatrix_computer_table, viewMatrix, projectionMatrix,
 		m_computer_table->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+#pragma endregion
+
+#pragma region Metal_desk
+
+	D3DXMATRIX worldMatrix_metal_desk;
+	D3DXMatrixTranslation(&translate, -4.0f, 0.0f, -4.0f);
+	D3DXMatrixScaling(&scale, 1.0f, 1.0f, 1.0f);
+	worldMatrix_metal_desk = worldMatrix * translate * scale;
+
+	m_Metal_desk->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Metal_desk->GetIndexCount(), worldMatrix_metal_desk, viewMatrix, projectionMatrix,
+		m_Metal_desk->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
 		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
 	if (!result)
 	{

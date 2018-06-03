@@ -64,6 +64,7 @@ private:
 	ModelClass* m_Lamp;
 	ModelClass* m_Desk;
 	ModelClass* m_Wood_desk;
+	ModelClass* m_Metal_desk;
 	ModelClass* m_woodStand;
 	ModelClass* m_computer_table;
 
