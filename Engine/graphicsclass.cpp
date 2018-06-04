@@ -675,12 +675,12 @@ bool GraphicsClass::Render()
 	static float rotation_ = 0.0f;
 
 	// Update the rotation variable each frame.
-	rotation += (float)D3DX_PI * 0.0002f;
+	rotation += (float)D3DX_PI * 0.002f;
 	if (rotation > 360.0f)
 	{
 		rotation -= 360.0f;
 	}
-	rotation_ -= (float)D3DX_PI * 0.0004f;
+	rotation_ -= (float)D3DX_PI * 0.004f;
 	if (rotation > 360.0f)
 	{
 		rotation -= 360.0f;
@@ -740,10 +740,6 @@ bool GraphicsClass::Render()
 	
 	#pragma region 3DRendering
 
-
-
-
-
 	D3DXMATRIX worldMatrix_Tile;
 	D3DXMatrixTranslation(&translate, 0.0f, -11.0f, 0.0f);
 	D3DXMatrixScaling(&scale, 0.125f, 0.125f, 0.125f);
@@ -757,9 +753,6 @@ bool GraphicsClass::Render()
 	{
 		return false;
 	}
-
-
-
 	
 	#pragma region Flag
 
@@ -951,8 +944,9 @@ bool GraphicsClass::Render()
 	#pragma region DVA
 
 	D3DXMATRIX worldMatrix_Dva;
-	D3DXMatrixTranslation(&translate, -215.0f, -110.0f, 315.0f);
-	D3DXMatrixScaling(&scale, 0.0125f, 0.0125f, 0.0125f);
+	D3DXMatrixTranslation(&translate, 0.0f, -130.0f, 0.0f);
+	D3DXMatrixScaling(&scale, 0.0125f, 0.0125f, 0.0125f);	
+	D3DXMatrixRotationY(&worldMatrix, rotation);
 	worldMatrix_Dva = worldMatrix * translate * scale;
 	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_Dva1->Render(m_D3D->GetDeviceContext());
@@ -980,6 +974,7 @@ bool GraphicsClass::Render()
 
 #pragma endregion
 
+	#pragma endregion
 	// Present the rendered scene to the screen.
 	m_D3D->EndScene();
 
