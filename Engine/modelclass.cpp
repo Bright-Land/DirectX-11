@@ -299,7 +299,7 @@ bool ModelClass::Initialize(ID3D11Device* device, char* modelFilename, WCHAR* te
 {
 	bool result_;
 	int vertexCount, textureCount, normalCount, faceCount;
-
+	
 	// Read in the name of the model file.
 	GetModelFilename(modelFilename);
 
@@ -307,8 +307,7 @@ bool ModelClass::Initialize(ID3D11Device* device, char* modelFilename, WCHAR* te
 	result_ = ReadFileCounts(modelFilename, vertexCount, textureCount, normalCount, faceCount);
 	result_ = LoadDataStructures(modelFilename, vertexCount, textureCount, normalCount, faceCount);
 	// 여기까지
-
-
+	
 	bool result;
 	// Load in the model data,
 	result = LoadModel("../Engine/data/MadeModel.txt");

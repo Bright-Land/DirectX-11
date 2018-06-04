@@ -53,6 +53,11 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <DisableSpecificWarnings>4005;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -65,9 +70,15 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <FunctionLevelLinking>
+      </FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

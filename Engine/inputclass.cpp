@@ -32,7 +32,7 @@ bool InputClass::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int
 	m_screenHeight = screenHeight;
 
 	// Initialize the location of the mouse on the screen.
-	m_mouseX = 960;
+	m_mouseX = 850;
 	m_mouseY = 600;
 
 	// Initialize the main direct input interface.
@@ -221,7 +221,7 @@ void InputClass::ProcessInput()
 	return;
 }
 
-	#pragma region KeyInput
+
 bool InputClass::IsEscapePressed()
 {
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
@@ -238,7 +238,7 @@ void InputClass::CameraMoveL(float& move)
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if (m_keyboardState[DIK_A] & 0x80)
 	{
-		move -= 0.0125f;
+		move -= 0.125f;
 	}
 }
 
@@ -247,7 +247,7 @@ void InputClass::CameraMoveR(float& move)
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if (m_keyboardState[DIK_D] & 0x80)
 	{
-		move += 0.0125f;
+		move += 0.125f;
 	}
 }
 
@@ -256,7 +256,7 @@ void InputClass::CameraMoveU(float& move)
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if (m_keyboardState[DIK_W] & 0x80)
 	{
-		move += 0.0125f;
+		move += 0.125f;
 	}
 }
 void InputClass::CameraMoveD(float& move)
@@ -264,7 +264,7 @@ void InputClass::CameraMoveD(float& move)
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if (m_keyboardState[DIK_S] & 0x80)
 	{
-		move -= 0.0125f;
+		move -= 0.125f;
 	}
 }
 
@@ -273,7 +273,7 @@ void InputClass::CameraMoveF(float& move)
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if (m_keyboardState[DIK_E] & 0x80)
 	{
-		move += 0.0125f;
+		move += 0.125f;
 	}
 }
 
@@ -282,7 +282,7 @@ void InputClass::CameraMoveB(float& move)
 	// Do a bitwise and on the keyboard state to check if the escape key is currently being pressed.
 	if (m_keyboardState[DIK_Q] & 0x80)
 	{
-		move -= 0.0125f;
+		move -= 0.125f;
 	}
 }
 
@@ -290,14 +290,15 @@ bool InputClass::CameraFixed()
 {
 	if (m_keyboardState[DIK_SPACE] & 0x80)
 	{
-		m_mouseX = 960;
+		m_mouseX = 850;
 		m_mouseY = 600;
 		return TRUE;
 	}
 	else
 		return FALSE;
 }
-#pragma endregion
+
+
 
 void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 {

@@ -11,9 +11,10 @@ GraphicsClass::GraphicsClass()
 	m_Camera = 0;	m_Camera_ = 0;
 	m_TextureShader = 0;
 	
-	m_Dva1 = 0;	m_Dva2 = 0;	
-	m_Hanzo = 0;
-	m_House1 = 0;	m_House2 = 0;	m_House3 = 0;	m_House4 = 0;	m_House5 = 0;
+	m_Dva1 = 0,	m_Dva2 = 0;	
+	m_House1 = 0, m_House2 = 0, m_House3 = 0, m_House4 = 0, m_House5 = 0, m_House6 = 0, m_House7 = 0, m_House8 = 0;
+	m_tile = 0;
+	m_flag1 = 0, m_flag2 = 0, m_flag3 = 0, m_flag4 = 0, m_flag5 = 0, m_flag6 = 0, m_flag7 = 0;
 
 	m_LightShader = 0;
 	m_Light = 0;
@@ -122,7 +123,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the bitmap object.
-	result = m_Bitmap->Initialize(m_D3D->GetDevice(), screenWidth, screenHeight, L"../Engine/data/aliance.dds", 1920, 1200);
+	result = m_Bitmap->Initialize(m_D3D->GetDevice(), screenWidth, screenHeight, L"../Engine/data/SKYBackGround.dds", 1920, 1200);
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the bitmap object.", L"Error", MB_OK);
@@ -131,6 +132,24 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	#pragma endregion
 
 	#pragma region m_Model
+
+	// Create the model object.
+	m_tile = new ModelClass;
+	if (!m_tile)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_tile->Initialize(m_D3D->GetDevice(), "../Engine/data/tile.obj", L"../Engine/data/tile.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	#pragma region Characters
+
 	// Create the model object.
 	m_Dva1 = new ModelClass;
 	if (!m_Dva1)
@@ -161,34 +180,9 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 		return false;
 	}
 
-	// Create the model object.
-	m_Hanzo = new ModelClass;
-	if (!m_Hanzo)
-	{
-		return false;
-	}
+	#pragma endregion
 
-	// Initialize the model object.
-	result = m_Hanzo->Initialize(m_D3D->GetDevice(), "../Engine/data/Hanzo.obj", L"../Engine/data/Hanzo.dds");
-	if (!result)
-	{
-		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
-		return false;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	#pragma region House
 
 	// Create the model object.
 	m_House1 = new ModelClass;
@@ -198,7 +192,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	result = m_House1->Initialize(m_D3D->GetDevice(), "../Engine/data/House_Bottom.obj", L"../Engine/data/House_Bottom.dds");
+	result = m_House1->Initialize(m_D3D->GetDevice(), "../Engine/data/Warehouse_Roof.obj", L"../Engine/data/iron.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -213,7 +207,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	result = m_House2->Initialize(m_D3D->GetDevice(), "../Engine/data/House_House.obj", L"../Engine/data/House_House.dds");
+	result = m_House2->Initialize(m_D3D->GetDevice(), "../Engine/data/Warehouse_Inhouse.obj", L"../Engine/data/iron.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -228,7 +222,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	result = m_House3->Initialize(m_D3D->GetDevice(), "../Engine/data/House_House_Top.obj", L"../Engine/data/House_House_Top.dds");
+	result = m_House3->Initialize(m_D3D->GetDevice(), "../Engine/data/Warehouse_Bone.obj", L"../Engine/data/iron.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -243,7 +237,7 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	result = m_House4->Initialize(m_D3D->GetDevice(), "../Engine/data/House_Wall.obj", L"../Engine/data/House_Wall.dds");
+	result = m_House4->Initialize(m_D3D->GetDevice(), "../Engine/data/Warehouse_plane.obj", L"../Engine/data/iron.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
@@ -258,15 +252,168 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	}
 
 	// Initialize the model object.
-	result = m_House5->Initialize(m_D3D->GetDevice(), "../Engine/data/House_Water.obj", L"../Engine/data/House_Water.dds");
+	result = m_House5->Initialize(m_D3D->GetDevice(), "../Engine/data/Warehouse_Wall.obj", L"../Engine/data/iron.dds");
 	if (!result)
 	{
 		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
 		return false;
 	}
 
+	// Create the model object.
+	m_House6 = new ModelClass;
+	if (!m_House6)
+	{
+		return false;
+	}
 
+	// Initialize the model object.
+	result = m_House6->Initialize(m_D3D->GetDevice(), "../Engine/data/Warehouse_Window.obj", L"../Engine/data/iron.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
 
+	// Create the model object.
+	m_House7 = new ModelClass;
+	if (!m_House7)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_House7->Initialize(m_D3D->GetDevice(), "../Engine/data/Warehouse_Windowglass.obj", L"../Engine/data/Bone.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+	
+	// Create the model object.
+	m_House8 = new ModelClass;
+	if (!m_House8)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_House8->Initialize(m_D3D->GetDevice(), "../Engine/data/Warehouse_OutWall.obj", L"../Engine/data/iron.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	#pragma endregion
+
+	#pragma region Flag
+
+	// Create the model object.
+	m_flag1 = new ModelClass;
+	if (!m_flag1)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_flag1->Initialize(m_D3D->GetDevice(), "../Engine/data/kit2.obj", L"../Engine/data/Bone.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// Create the model object.
+	m_flag2 = new ModelClass;
+	if (!m_flag2)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_flag2->Initialize(m_D3D->GetDevice(), "../Engine/data/kit.obj", L"../Engine/data/Bone.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// Create the model object.
+	m_flag3 = new ModelClass;
+	if (!m_flag3)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_flag3->Initialize(m_D3D->GetDevice(), "../Engine/data/flag.obj", L"../Engine/data/IKEA.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// Create the model object.
+	m_flag4 = new ModelClass;
+	if (!m_flag4)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_flag4->Initialize(m_D3D->GetDevice(), "../Engine/data/flag.obj", L"../Engine/data/IKEA.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// Create the model object.
+	m_flag5 = new ModelClass;
+	if (!m_flag5)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_flag5->Initialize(m_D3D->GetDevice(), "../Engine/data/flag.obj", L"../Engine/data/IKEA.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// Create the model object.
+	m_flag6 = new ModelClass;
+	if (!m_flag6)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_flag6->Initialize(m_D3D->GetDevice(), "../Engine/data/kit3.obj", L"../Engine/data/Bone.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	// Create the model object.
+	m_flag7 = new ModelClass;
+	if (!m_flag7)
+	{
+		return false;
+	}
+
+	// Initialize the model object.
+	result = m_flag7->Initialize(m_D3D->GetDevice(), "../Engine/data/TwoFloorRoom.obj", L"../Engine/data/Bone.dds");
+	if (!result)
+	{
+		MessageBox(hwnd, L"Could not initialize the model object.", L"Error", MB_OK);
+		return false;
+	}
+
+	#pragma endregion
 
 
 	#pragma endregion
@@ -354,62 +501,78 @@ void GraphicsClass::Shutdown()
 		m_Dva1->Shutdown();
 		delete m_Dva1;
 		m_Dva1 = 0;
-	}
 
-	// Release the model object.
-	if (m_Dva2)
-	{
 		m_Dva2->Shutdown();
 		delete m_Dva2;
 		m_Dva2 = 0;
 	}
 
 	// Release the model object.
-	if (m_Hanzo)
+	if (m_tile)
 	{
-		m_Hanzo->Shutdown();
-		delete m_Hanzo;
-		m_Hanzo = 0;
-	}
+		m_tile->Shutdown();
+		delete m_tile;
+		m_tile = 0;
 
-	// Release the model object.
-	if (m_House1)
-	{
 		m_House1->Shutdown();
 		delete m_House1;
 		m_House1 = 0;
-	}
 
-	// Release the model object.
-	if (m_House2)
-	{
 		m_House2->Shutdown();
 		delete m_House2;
 		m_House2 = 0;
-	}
 
-	// Release the model object.
-	if (m_House3)
-	{
 		m_House3->Shutdown();
 		delete m_House3;
 		m_House3 = 0;
-	}
 
-	// Release the model object.
-	if (m_House4)
-	{
 		m_House4->Shutdown();
 		delete m_House4;
 		m_House4 = 0;
-	}
 
-	// Release the model object.
-	if (m_House5)
-	{
 		m_House5->Shutdown();
 		delete m_House5;
 		m_House5 = 0;
+
+		m_House6->Shutdown();
+		delete m_House6;
+		m_House6 = 0;
+
+		m_House7->Shutdown();
+		delete m_House7;
+		m_House7 = 0;
+
+		m_House8->Shutdown();
+		delete m_House8;
+		m_House8 = 0;
+
+		m_flag1->Shutdown();
+		delete m_flag1;
+		m_flag1 = 0;
+
+		m_flag2->Shutdown();
+		delete m_flag2;
+		m_flag2 = 0;
+
+		m_flag3->Shutdown();
+		delete m_flag3;
+		m_flag3 = 0;
+
+		m_flag4->Shutdown();
+		delete m_flag4;
+		m_flag4 = 0;
+
+		m_flag5->Shutdown();
+		delete m_flag5;
+		m_flag5 = 0;
+
+		m_flag6->Shutdown();
+		delete m_flag6;
+		m_flag6 = 0;
+
+		m_flag7->Shutdown();
+		delete m_flag7;
+		m_flag7 = 0;
 	}
 
 	// Release the camera object.
@@ -492,10 +655,10 @@ bool GraphicsClass::Frame(int fps, int cpu, float frameTime, int mouseX, int mou
 	#pragma endregion
 
 	// Set the position of the camera.
-	m_Camera->SetPosition(left + right, up + down, -8.0f+ front + behind);
+	m_Camera->SetPosition(80.0f + left + right, 8.0f + up + down, -80.0f+ front + behind);
 	
 	// 마우스가 화면에 닿으면 안 움직이는 것은 정상임. 이건 따로 고칠 필요 없음.
-	m_Camera->SetRotation((mouseY - 600) * 0.25f, (mouseX - 960) * 0.25f , 0.0f);	
+	m_Camera->SetRotation((mouseY - 600) * 0.5f, (mouseX - 960) * 0.5f , 0.0f);	
 
 	m_Camera_->SetPosition(0.0f, 0.0f, -10.0f);
 
@@ -577,74 +740,213 @@ bool GraphicsClass::Render()
 	
 	#pragma region 3DRendering
 
-	#pragma region House
+
+
+
+
+	D3DXMATRIX worldMatrix_Tile;
+	D3DXMatrixTranslation(&translate, 0.0f, -11.0f, 0.0f);
+	D3DXMatrixScaling(&scale, 0.125f, 0.125f, 0.125f);
+	worldMatrix_Tile = worldMatrix * translate * scale;
+	m_tile->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_tile->GetIndexCount(), worldMatrix_Tile, viewMatrix, projectionMatrix,
+		m_tile->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+
 
 	
-	D3DXMATRIX worldMatrix_House;
-	D3DXMatrixTranslation(&translate, -11.5f, -3.0f, -5.0f);
-	D3DXMatrixScaling(&scale, 1.5f, 1.5f, 1.5f);
-	worldMatrix_House = worldMatrix * translate * scale;
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	m_House1->Render(m_D3D->GetDeviceContext());
+	#pragma region Flag
 
+	D3DXMATRIX worldMatrix_flag1;
+	D3DXMatrixTranslation(&translate, 16.0f, 0.0f, 0.0f);
+	D3DXMatrixScaling(&scale, 0.075f, 0.055f, 0.095f);
+	worldMatrix_flag1 = worldMatrix * scale * translate;
+	m_flag1->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_flag1->GetIndexCount(), worldMatrix_flag1, viewMatrix, projectionMatrix,
+		m_flag1->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+	D3DXMATRIX worldMatrix_flag2;
+	D3DXMatrixTranslation(&translate, -16.0f, 0.0f, 0.0f);
+	worldMatrix_flag2 = worldMatrix * scale * translate;
+	m_flag2->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_flag2->GetIndexCount(), worldMatrix_flag2, viewMatrix, projectionMatrix,
+		m_flag2->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+	D3DXMATRIX worldMatrix_flag3;
+	D3DXMatrixTranslation(&translate, 16.0f, 0.0f, 20.0f);
+	worldMatrix_flag3 = worldMatrix * translate;
+	m_flag3->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_flag3->GetIndexCount(), worldMatrix_flag3, viewMatrix, projectionMatrix,
+		m_flag3->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+	D3DXMATRIX worldMatrix_flag4;
+	D3DXMatrixTranslation(&translate, 16.0f, 0.0f, -20.0f);
+	worldMatrix_flag4 = worldMatrix * translate;
+	m_flag4->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_flag4->GetIndexCount(), worldMatrix_flag4, viewMatrix, projectionMatrix,
+		m_flag4->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+	D3DXMATRIX worldMatrix_flag5;
+	D3DXMatrixTranslation(&translate, -16.0f, 0.0f, 20.0f);
+	worldMatrix_flag5 = worldMatrix * scale * translate;
+	m_flag5->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_flag5->GetIndexCount(), worldMatrix_flag5, viewMatrix, projectionMatrix,
+		m_flag5->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+	D3DXMATRIX worldMatrix_flag6;
+	D3DXMatrixTranslation(&translate, -16.0f, 0.0f, -20.0f);
+	worldMatrix_flag6 = worldMatrix* scale *translate;
+	m_flag6->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_flag6->GetIndexCount(), worldMatrix_flag6, viewMatrix, projectionMatrix,
+		m_flag6->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+	D3DXMATRIX worldMatrix_flag7;
+	D3DXMatrixTranslation(&translate, -16.0f, 11.125f, 25.0f);
+	D3DXMatrixScaling(&scale, 0.0055f, 0.0055f, 0.0055f);
+	worldMatrix_flag6 = worldMatrix * scale * translate;
+	m_flag7->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_flag7->GetIndexCount(), worldMatrix_flag6, viewMatrix, projectionMatrix,
+		m_flag7->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+
+	#pragma endregion
+
+	#pragma region House
+
+	D3DXMATRIX worldMatrix_House;
+	D3DXMatrixTranslation(&translate, 0.0f, 0.0f, 0.0f);
+	D3DXMatrixScaling(&scale, 0.0125f, 0.0325f, 0.0125f);
+	worldMatrix_House = worldMatrix * translate * scale;
+	
+	m_House1->Render(m_D3D->GetDeviceContext());
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House1->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-		m_House1->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+		m_House1->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
 	if (!result)
 	{
 		return false;
 	}
 
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_House2->Render(m_D3D->GetDeviceContext());
-
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House2->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-		m_House2->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+		m_House2->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
 	if (!result)
 	{
 		return false;
 	}
 
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_House3->Render(m_D3D->GetDeviceContext());
-
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House3->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-		m_House3->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+		m_House3->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
 	if (!result)
 	{
 		return false;
 	}
 
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_House4->Render(m_D3D->GetDeviceContext());
-
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House4->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-		m_House4->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+		m_House4->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
 	if (!result)
 	{
 		return false;
 	}
 
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
 	m_House5->Render(m_D3D->GetDeviceContext());
-
 	// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House5->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
-		m_House5->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
+		m_House5->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
 	if (!result)
 	{
 		return false;
 	}
 
-#pragma endregion
+	m_House6->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House6->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
+		m_House6->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+	m_House7->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House7->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
+		m_House7->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+
+	m_House8->Render(m_D3D->GetDeviceContext());
+	// Render the model using the light shader.
+	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_House8->GetIndexCount(), worldMatrix_House, viewMatrix, projectionMatrix,
+		m_House8->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
+		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+	if (!result)
+	{
+		return false;
+	}
+	
+	#pragma endregion
 
 	#pragma region DVA
 
@@ -674,28 +976,6 @@ bool GraphicsClass::Render()
 	{
 		return false;
 	}
-
-#pragma endregion
-
-	#pragma region Hanzo
-
-	D3DXMATRIX worldMatrix_Hanzo;
-	D3DXMatrixTranslation(&translate, 215.0f, -110.0f, 315.0f);
-	D3DXMatrixScaling(&scale, 0.0125f, 0.0125f, 0.0125f);
-	worldMatrix_Hanzo = worldMatrix * translate * scale;
-	// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.
-	m_Hanzo->Render(m_D3D->GetDeviceContext());
-	// Render the model using the light shader.
-	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_Hanzo->GetIndexCount(), worldMatrix_Hanzo, viewMatrix, projectionMatrix,
-		m_Hanzo->GetTexture(), m_Light->GetDirection(), m_Light->GetAmbientColor(), m_Light->GetDiffuseColor(),
-		m_Camera->GetPosition(), m_Light->GetSpecularColor(), m_Light->GetSpecularPower());
-	if (!result)
-	{
-		return false;
-	}
-
-#pragma endregion
-
 
 
 #pragma endregion

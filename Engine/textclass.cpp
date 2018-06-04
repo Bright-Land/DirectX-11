@@ -637,7 +637,7 @@ bool TextClass::SetPolygons(int &vertexcount, ID3D11DeviceContext* deviceContext
 	_itoa_s(vertexcount/3, tempString, 10);
 
 	// Setup the cpu string.
-	strcpy_s(polyString, "Polygons Number: ");
+	strcpy_s(polyString, "Polygons Number (VertexCount/3): ");
 	strcat_s(polyString, tempString);
 
 	// Update the sentence vertex buffer with the new string information.

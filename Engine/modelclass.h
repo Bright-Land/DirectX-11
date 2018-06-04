@@ -11,7 +11,7 @@
 #include <d3d11.h>
 #include <d3dx10math.h>
 
-
+#include <io.h>
 #include <fstream>
 using namespace std;
 

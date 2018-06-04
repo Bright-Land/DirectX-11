@@ -229,8 +229,6 @@ bool SystemClass::Frame()
 
 	// Get the location of the mouse from the input object,
 	m_Input->GetMouseLocation(mouseX, mouseY);
-
-	#pragma region CamreraMovement
 	camerafix = m_Input->CameraFixed();
 	if (camerafix == TRUE)
 	{
@@ -241,13 +239,13 @@ bool SystemClass::Frame()
 		up = 0.0f;
 		down = 0.0f;
 	}
+
 	m_Input->CameraMoveL(left);
 	m_Input->CameraMoveR(right);
 	m_Input->CameraMoveF(front);
 	m_Input->CameraMoveB(behind);
 	m_Input->CameraMoveU(up);
 	m_Input->CameraMoveD(down);
-#pragma endregion
 
 	// Do the frame processing for the graphics object.
 	result = m_Graphics->Frame(m_Fps->GetFps(), m_Cpu->GetCpuPercentage(), m_Timer->GetTime(), mouseX, mouseY, left, right, front, behind, up, down);
