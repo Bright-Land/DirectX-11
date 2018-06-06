@@ -3,11 +3,20 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /////////////
+// DEFINES //
+/////////////
+#define NUM_LIGHTS 4
+
+/////////////
 // GLOBALS //
 /////////////
-
 Texture2D shaderTexture;
 SamplerState SampleType;
+
+cbuffer LightColorBuffer
+{
+	float4 diffuseColorS[NUM_LIGHTS];
+};
 
 cbuffer LightBuffer
 {
@@ -17,6 +26,7 @@ cbuffer LightBuffer
 	 float specularPower;
 	 float4 specularColor;
 };
+
 
 //////////////
 // TYPEDEFS //
@@ -28,6 +38,12 @@ struct PixelInputType
 	 float2 tex : TEXCOORD0;
 	 float3 normal : NORMAL;
 	 float3 viewDirection : TEXCOORD1;
+
+	float3 lightPos1 : TEXCOORD2;
+	float3 lightPos2 : TEXCOORD3;
+	float3 lightPos3 : TEXCOORD4;
+	float3 lightPos4 : TEXCOORD5;
+
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -38,14 +54,28 @@ float4 LightPixelShader(PixelInputType input) : SV_TARGET
 {
 	 float4 textureColor;
 	 float3 lightDir;
-	 float lightIntensity;
-	 float4 color;
+	 float lightIntensity,lightIntensity1, lightIntensity2, lightIntensity3, lightIntensity4;
+	 float4 color, color1, color2, color3, color4,color5;
 	 float3 reflection;
 	 float4 specular;
 
+	// Calculate the different amounts of light on this pixel based on the positions of the lights.
+	lightIntensity1 = saturate(dot(input.normal, input.lightPos1));
+	lightIntensity2 = saturate(dot(input.normal, input.lightPos2));
+	lightIntensity3 = saturate(dot(input.normal, input.lightPos3));
+	lightIntensity4 = saturate(dot(input.normal, input.lightPos4));
+	
+	// Determine the diffuse color amount of each of the four lights.
+	color1 = diffuseColorS[0] * lightIntensity1;
+	color2 = diffuseColorS[1] * lightIntensity2;
+	color3 = diffuseColorS[2] * lightIntensity3;
+	color4 = diffuseColorS[3] * lightIntensity4;
 
 	// Sample the pixel color from the texture using the sampler at this texture coordinate location.
 	textureColor = shaderTexture.Sample(SampleType, input.tex);
+
+	color5 = saturate(color1 + color2 + color3 + color4) * textureColor;
+
 
 	// Set the default output color to the ambient light value for all pixels.     
 	color = ambientColor; 

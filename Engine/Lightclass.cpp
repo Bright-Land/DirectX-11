@@ -27,6 +27,13 @@ void LightClass::SetDiffuseColor(float red, float green, float blue, float alpha
 	return;
 }
 
+void LightClass::SetPosition(float x, float y, float z)
+{
+	m_position = D3DXVECTOR4(x, y, z, 1.0f);
+	return;
+}
+
+
 void LightClass::SetDirection(float x, float y, float z)
 {
 	m_direction = D3DXVECTOR3(x, y, z);
@@ -68,4 +75,9 @@ D3DXVECTOR4 LightClass::GetSpecularColor()
 float LightClass::GetSpecularPower()
 {
 	return m_specularPower;
+}
+
+D3DXVECTOR4 LightClass::GetPosition()
+{
+	return m_position;
 }

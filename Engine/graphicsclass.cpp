@@ -21,6 +21,13 @@ GraphicsClass::GraphicsClass()
 	m_Light_ = 0;
 	m_Bitmap = 0;
 	m_Text = 0;
+
+	//Á¶¸í1,2,3,4
+	m_Light1 = 0;
+	m_Light2 = 0;
+	m_Light3 = 0;
+	m_Light4 = 0;
+
 	#pragma endregion
 }
 
@@ -464,6 +471,56 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 	m_Light_->SetSpecularColor(1.0f, 1.0f, 1.0f, 1.0f);
 	m_Light_->SetSpecularPower(150.0f);
 
+	//Á¶¸í
+
+	//ºÓÀº»ö
+	// Create the first light object.
+	m_Light1 = new LightClass;
+	if (!m_Light1)
+	{
+		return false;
+	}
+	// Initialize the first light object.
+	m_Light1->SetDiffuseColor(1.0f, 0.0f, 0.0f, 1.0f);
+	m_Light1->SetPosition(3.0f, 1.0f, 3.0f);
+	
+	//³ì»ö
+	// Create the second light object.
+	m_Light2 = new LightClass;
+	if (!m_Light2)
+	{
+		return false;
+	}
+	// Initialize the second light object.
+	m_Light2->SetDiffuseColor(0.0f, 1.0f, 0.0f, 1.0f);
+	m_Light2->SetPosition(-3.0f, 1.0f, 3.0f);
+
+
+	//ÆÄ¶õ»ö
+	// Create the third light object.
+	m_Light3 = new LightClass;
+	if (!m_Light3)
+	{
+		return false;
+	}
+	// Initialize the third light object.
+	m_Light3->SetDiffuseColor(0.0f, 0.0f, 1.0f, 1.0f);
+	m_Light3->SetPosition(-3.0f, 1.0f, -3.0f);
+
+
+	//Èò»ö
+	// Create the fourth light object.
+	m_Light4 = new LightClass;
+	if (!m_Light4)
+	{
+		return false;
+	}
+	// Initialize the fourth light object.
+	m_Light4->SetDiffuseColor(1.0f, 1.0f, 1.0f, 1.0f);
+	m_Light4->SetPosition(3.0f, 1.0f, -3.0f);
+
+
+
 	#pragma endregion
 
 	return true;
@@ -473,6 +530,32 @@ bool GraphicsClass::Initialize(int screenWidth, int screenHeight, HWND hwnd)
 void GraphicsClass::Shutdown()
 {
 	#pragma region Shutdown
+
+	// Release the light objects.
+	if (m_Light1)
+	{
+		delete m_Light1;
+		m_Light1 = 0;
+	}
+
+	if (m_Light2)
+	{
+		delete m_Light2;
+		m_Light2 = 0;
+	}
+
+	if (m_Light3)
+	{
+		delete m_Light3;
+		m_Light3 = 0;
+	}
+
+	if (m_Light4)
+	{
+		delete m_Light4;
+		m_Light4 = 0;
+	}
+
 	// Release the light object.
 	if (m_Light)
 	{
@@ -662,6 +745,12 @@ bool GraphicsClass::Frame(int fps, int cpu, float frameTime, int mouseX, int mou
 
 	m_Camera_->SetPosition(0.0f, 0.0f, -10.0f);
 
+	result = Render();
+	if (!result)
+	{
+		return false;
+	}
+
 	return true;
 }
 
@@ -669,6 +758,22 @@ bool GraphicsClass::Render()
 {
 	D3DXMATRIX worldMatrix, viewMatrix, viewMatrix_, projectionMatrix, orthoMatrix, translate, scale;
 	bool result;
+	D3DXVECTOR4 diffuseColor[4];
+	D3DXVECTOR4 lightPosition[4];
+
+	#pragma region light_position
+	// Create the diffuse color array from the four light colors.
+	diffuseColor[0] = m_Light1->GetDiffuseColor();
+	diffuseColor[1] = m_Light2->GetDiffuseColor();
+	diffuseColor[2] = m_Light3->GetDiffuseColor();
+	diffuseColor[3] = m_Light4->GetDiffuseColor();
+
+	// Create the light position array from the four light positions.
+	lightPosition[0] = m_Light1->GetPosition();
+	lightPosition[1] = m_Light2->GetPosition();
+	lightPosition[2] = m_Light3->GetPosition();
+	lightPosition[3] = m_Light4->GetPosition();
+
 
 	#pragma region rotation
 	static float rotation = 0.0f;
@@ -745,10 +850,14 @@ bool GraphicsClass::Render()
 	D3DXMatrixScaling(&scale, 0.125f, 0.125f, 0.125f);
 	worldMatrix_Tile = worldMatrix * translate * scale;
 	m_tile->Render(m_D3D->GetDeviceContext());
-	// Render the model using the light shader.
+	//// Render the model using the light shader.
 	result = m_LightShader->Render(m_D3D->GetDeviceContext(), m_tile->GetIndexCount(), worldMatrix_Tile, viewMatrix, projectionMatrix,
 		m_tile->GetTexture(), m_Light_->GetDirection(), m_Light_->GetAmbientColor(), m_Light_->GetDiffuseColor(),
 		m_Camera->GetPosition(), m_Light_->GetSpecularColor(), m_Light_->GetSpecularPower());
+
+	//result = m_LightShader->Render_(m_D3D->GetDeviceContext(), m_tile->GetIndexCount(), worldMatrix, viewMatrix, projectionMatrix,
+	//	m_tile->GetTexture(), diffuseColor, lightPosition);
+
 	if (!result)
 	{
 		return false;

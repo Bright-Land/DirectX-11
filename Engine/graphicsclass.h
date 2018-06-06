@@ -21,7 +21,7 @@
 /////////////
 // GLOBALS //
 /////////////
-const bool FULL_SCREEN = true;
+const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = false;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = 0.1f;
@@ -43,6 +43,7 @@ public:
 	
 
 	bool Render();
+
 private:
 	D3DClass* m_D3D;
 	CameraClass* m_Camera;
@@ -52,6 +53,7 @@ private:
 	
 	TextureShaderClass* m_TextureShader;
 	
+
 	ModelClass* m_Dva1,* m_Dva2;
 	ModelClass* m_House1, *m_House2, *m_House3, *m_House4, *m_House5, *m_House6, *m_House7, *m_House8;
 	ModelClass* m_tile;
@@ -62,6 +64,8 @@ private:
 	LightClass* m_Light_;
 	BitmapClass* m_Bitmap;
 	TextClass* m_Text;
+
+	LightClass *m_Light1, *m_Light2, *m_Light3, *m_Light4;
 };
 
 #endif
