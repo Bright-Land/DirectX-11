@@ -32,7 +32,7 @@ bool InputClass::Initialize(HINSTANCE hinstance, HWND hwnd, int screenWidth, int
 	m_screenHeight = screenHeight;
 
 	// Initialize the location of the mouse on the screen.
-	m_mouseX = 850;
+	m_mouseX = 872;
 	m_mouseY = 600;
 
 	// Initialize the main direct input interface.
@@ -290,7 +290,7 @@ bool InputClass::CameraFixed()
 {
 	if (m_keyboardState[DIK_SPACE] & 0x80)
 	{
-		m_mouseX = 850;
+		m_mouseX = 872;
 		m_mouseY = 600;
 		return TRUE;
 	}

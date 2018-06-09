@@ -21,7 +21,7 @@
 /////////////
 // GLOBALS //
 /////////////
-const bool FULL_SCREEN = true;
+const bool FULL_SCREEN = false;
 const bool VSYNC_ENABLED = false;
 const float SCREEN_DEPTH = 1000.0f;
 const float SCREEN_NEAR = 0.1f;
@@ -53,9 +53,11 @@ private:
 	TextureShaderClass* m_TextureShader;
 	
 	ModelClass* m_Dva1,* m_Dva2;
-	ModelClass* m_House1, *m_House2, *m_House3, *m_House4, *m_House5, *m_House6, *m_House7, *m_House8;
-	ModelClass* m_tile;
+	ModelClass* m_House1, *m_House2, *m_House3, *m_House4, *m_House5;
+	ModelClass* m_tile1, *m_tile2;
 	ModelClass* m_flag1, *m_flag2, *m_flag3, *m_flag4, *m_flag5, *m_flag6, *m_flag7;
+	ModelClass* m_board1, *m_board2;
+
 
 	LightShaderClass* m_LightShader;
 	LightClass* m_Light;
