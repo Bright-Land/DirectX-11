@@ -47,12 +47,14 @@ private:
 	bool Frame();
 	void InitializeWindows(int&, int&);
 	void ShutdownWindows();
-	float left;
-	float right;
-	float front;
-	float behind;
-	float up;
-	float down;
+	float left;		float ob_left;
+	float right;	float ob_right;
+	float front;	float ob_front;
+	float behind;	float ob_behind;
+	float up;		float ob_up;
+	float down;		float ob_down;
+	bool moved;
+	float bit;
 private:
 	LPCWSTR m_applicationName;
 	HINSTANCE m_hinstance;

@@ -22,7 +22,7 @@
 // INCLUDES //
 //////////////
 #include <dinput.h>
-
+#include <time.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 // Class name: InputClass
@@ -47,6 +47,10 @@ public:
 	void CameraMoveB(float&);
 	void CameraMoveU(float&);
 	void CameraMoveD(float&);
+	void CameraMoveForRoom(float&, float&, float&, float&, float&, float&);
+	void BitmapMove(float&);
+
+	void ObjectMove(bool&);
 
 	bool CameraFixed();
 private:

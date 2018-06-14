@@ -10,8 +10,6 @@
 //////////////
 #include <d3d11.h>
 #include <d3dx10math.h>
-
-#include <io.h>
 #include <fstream>
 using namespace std;
 
@@ -32,6 +30,8 @@ private:
 		D3DXVECTOR3 position;
 	    D3DXVECTOR2 texture;
 		D3DXVECTOR3 normal;
+		D3DXVECTOR3 tangent;
+		D3DXVECTOR3 binormal;
 	};
 
 	struct ModelType
@@ -39,8 +39,21 @@ private:
 		float x, y, z;
 		float tu, tv;
 		float nx, ny, nz;
+		float tx, ty, tz;
+		float bx, by, bz;
 	};
 
+	struct TempVertexType
+	{
+		float x, y, z;
+		float tu, tv;
+		float nx, ny, nz;
+	};
+
+	struct VectorType
+	{
+		float x, y, z;
+	};
 
 	// 추가한 코드
 	typedef struct
@@ -63,12 +76,13 @@ public:
 	~ModelClass();
 
 	bool Initialize(ID3D11Device*, char*, WCHAR*);
+	bool Initialize(ID3D11Device*, char*, WCHAR*, WCHAR*);
 	void Shutdown();
 	void Render(ID3D11DeviceContext*);
 
 	int GetIndexCount();
 	ID3D11ShaderResourceView* GetTexture();
-
+	ID3D11ShaderResourceView* GetNormalMap();
 
 private:
 	// 추가한 코드
@@ -82,15 +96,20 @@ private:
 	void RenderBuffers(ID3D11DeviceContext*);
 
 	bool LoadTexture(ID3D11Device*, WCHAR*);
+	bool LoadTextures(ID3D11Device*, WCHAR*, WCHAR*);
 	void ReleaseTexture();
 
 	bool LoadModel(char*);
 	void ReleaseModel();
+
+	void CalculateModelVectors();
+	void CalculateTangentBinormal(TempVertexType, TempVertexType, TempVertexType, VectorType&, VectorType&);
+	void CalculateNormal(VectorType, VectorType, VectorType&);
 private:
 	ID3D11Buffer *m_vertexBuffer, *m_indexBuffer;
 	int m_vertexCount, m_indexCount;
 	TextureClass* m_Texture;
-
+	TextureClass* m_NormalMap;
 	ModelType* m_model;
 };
 

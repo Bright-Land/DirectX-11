@@ -12,7 +12,8 @@ TextClass::TextClass()
 
 	m_sentence1 = 0;	m_sentence2 = 0;	m_sentence3 = 0;
 	m_sentence4 = 0;	m_sentence5 = 0;	m_sentence6 = 0;
-	m_sentence7 = 0;	
+	m_sentence7 = 0;	m_sentence8 = 0;	m_sentence9 = 0;
+	m_sentence10 = 0;
 }
 
 
@@ -30,7 +31,6 @@ bool TextClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 						   D3DXMATRIX baseViewMatrix)
 {
 	bool result;
-
 
 	// Store the screen width and height.
 	m_screenWidth = screenWidth;
@@ -167,6 +167,49 @@ bool TextClass::Initialize(ID3D11Device* device, ID3D11DeviceContext* deviceCont
 		return false;
 	}
 
+	// Initialize the first sentence.
+	result = InitializeSentence(&m_sentence8, 16, device);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Now update the sentence vertex buffer with the new string information.
+	result = UpdateSentence(m_sentence8, "X: ", 20, 100, 0.0f, 1.0f, 0.0f, deviceContext);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Initialize the first sentence.
+	result = InitializeSentence(&m_sentence9, 16, device);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Now update the sentence vertex buffer with the new string information.
+	result = UpdateSentence(m_sentence9, ", Y: ", 60, 100, 0.0f, 1.0f, 0.0f, deviceContext);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Initialize the first sentence.
+	result = InitializeSentence(&m_sentence10, 16, device);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Now update the sentence vertex buffer with the new string information.
+	result = UpdateSentence(m_sentence10, ", Z: ", 100, 100, 0.0f, 1.0f, 0.0f, deviceContext);
+	if (!result)
+	{
+		return false;
+	}
+
+
 	return true;
 }
 
@@ -193,6 +236,15 @@ void TextClass::Shutdown()
 
 	// Release the third sentence.
 	ReleaseSentence(&m_sentence7);
+
+	// Release the second sentence.
+	ReleaseSentence(&m_sentence8);
+
+	// Release the third sentence.
+	ReleaseSentence(&m_sentence9);
+
+	// Release the third sentence.
+	ReleaseSentence(&m_sentence10);
 
 	// Release the font shader object.
 	if(m_FontShader)
@@ -263,6 +315,27 @@ bool TextClass::Render(ID3D11DeviceContext* deviceContext, D3DXMATRIX worldMatri
 
 	// Draw the second sentence.
 	result = RenderSentence(deviceContext, m_sentence7, worldMatrix, orthoMatrix);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Draw the second sentence.
+	result = RenderSentence(deviceContext, m_sentence8, worldMatrix, orthoMatrix);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Draw the second sentence.
+	result = RenderSentence(deviceContext, m_sentence9, worldMatrix, orthoMatrix);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Draw the second sentence.
+	result = RenderSentence(deviceContext, m_sentence10, worldMatrix, orthoMatrix);
 	if (!result)
 	{
 		return false;
@@ -624,6 +697,59 @@ bool TextClass::SetMousePosition(int mouseX, int mouseY, ID3D11DeviceContext* de
 
 	return true;
 }
+
+bool TextClass::SetKeyBoardPosition(float left, float right, float front, float behind, float up, float down, ID3D11DeviceContext* deviceContext)
+{
+	char tempString[16];
+	char keyboardString[16];
+	bool result;
+
+
+	// Convert the mouseX integer to string format.
+	_itoa_s(left + right, tempString, 10);
+
+	// Setup the mouseX string.
+	strcpy_s(keyboardString, "X: ");
+	strcat_s(keyboardString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = UpdateSentence(m_sentence8, keyboardString, 20, 100, 0.8f, 0.8f, 1.0f, deviceContext);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Convert the mouseY integer to string format.
+	_itoa_s(up + down, tempString, 10);
+
+	// Setup the mouseY string.
+	strcpy_s(keyboardString, ", Y: ");
+	strcat_s(keyboardString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = UpdateSentence(m_sentence9, keyboardString, 60, 100, 0.8f, 1.0f, 0.8f, deviceContext);
+	if (!result)
+	{
+		return false;
+	}
+
+	// Convert the mouseY integer to string format.
+	_itoa_s(front + behind, tempString, 10);
+
+	// Setup the mouseY string.
+	strcpy_s(keyboardString, ", Z: ");
+	strcat_s(keyboardString, tempString);
+
+	// Update the sentence vertex buffer with the new string information.
+	result = UpdateSentence(m_sentence10, keyboardString, 100, 100, 1.0f, 0.8f, 0.8f, deviceContext);
+	if (!result)
+	{
+		return false;
+	}
+
+	return true;
+}
+
 
 bool TextClass::SetPolygons(int &vertexcount, ID3D11DeviceContext* deviceContext)
 {

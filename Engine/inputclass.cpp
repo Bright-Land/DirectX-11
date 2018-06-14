@@ -218,7 +218,7 @@ void InputClass::ProcessInput()
 	if (m_mouseX > m_screenWidth) { m_mouseX = m_screenWidth; }
 	if (m_mouseY > m_screenHeight) { m_mouseY = m_screenHeight; }
 
-	return;
+return;
 }
 
 
@@ -286,6 +286,181 @@ void InputClass::CameraMoveB(float& move)
 	}
 }
 
+
+// This Function Must need the Fullscreen
+void InputClass::CameraMoveForRoom(float& left, float& right, float& front, float& behind, float& up, float& down)
+{
+	// (-188, 28, 203) 841, 630
+	if (m_keyboardState[DIK_1] & 0x80)
+	{
+		// -188
+		// x축 좌표가 -188보다 작으면, 커질때까지 더해준다.
+	
+		#pragma region KeyBoardSet
+
+		left = -188;
+		right = 0;
+		front = 203;
+		behind = 0;
+		up = 28;
+		down = 0;
+
+
+		//if ((left + right) < -188.0f)
+		//{
+		//	while ((left + right) >= -188.0f)
+		//	{
+		//		right += 0.125f;
+		//	}
+		//}
+
+		//// 그렇지 않으면 작아질 때까지 빼준다.
+		//else if ((left + right) > -188.0f)
+		//{
+		//	while ((left + right) <= -188.0f)
+		//	{
+		//		left -= 0.125f;
+		//	}
+		//}
+
+		//// 28
+		//if ((up + down) < 28.0f)
+		//{
+		//	while ((up + down) >= 28.0f)
+		//	{
+		//		up += 0.125f;
+		//	}
+		//}
+
+		//else if ((up + down) > 28.0f)
+		//{
+		//	while ((up + down) <= 28.0f)
+		//	{
+		//		down -= 0.125f;
+		//	}
+		//}
+
+		//// 203
+		//if ((front + behind) < 203.0f)
+		//{
+		//	while ((front + behind) >= 203.0f)
+		//	{
+		//		front += 0.125f;
+		//	}
+		//}
+
+		//else if ((front + behind) > 203.0f)
+		//{
+		//	while ((front + behind) <= 203.0f)
+		//	{
+		//		behind -= 0.125f;
+		//	}
+		//}
+
+		#pragma endregion
+
+		m_mouseX = 841;
+		m_mouseY = 630;
+	}
+
+	// (-232, 30, 240) 1030, 635
+	if (m_keyboardState[DIK_2] & 0x80)
+	{
+		left = -232;
+		right = 0;
+		front = 240;
+		behind = 0;
+		up = 30;
+		down = 0;
+
+		m_mouseX = 1030;
+		m_mouseY = 635;
+	}
+
+	// (-339, 60, 185) 1049, 617
+	if (m_keyboardState[DIK_3] & 0x80)
+	{
+		left = -339;
+		right = 0;
+		front = 185;
+		behind = 0;
+		up = 60;
+		down = 0;
+
+		m_mouseX = 1049;
+		m_mouseY = 617;
+	}
+
+	// (-350, 27, 375) 1161, 619
+	if (m_keyboardState[DIK_4] & 0x80)
+	{
+		left = -350;
+		right = 0;
+		front = 375;
+		behind = 0;
+		up = 27;
+		down = 0;
+
+		m_mouseX = 1161;
+		m_mouseY = 619;
+	}
+
+	// (-315, 25, 345) 511, 634
+	if (m_keyboardState[DIK_5] & 0x80)
+	{
+		left = -315;
+		right = 0;
+		front = 345;
+		behind = 0;
+		up = 25;
+		down = 0;
+
+		m_mouseX = 511;
+		m_mouseY = 634;
+	}
+
+	// (-326,  308, -133) 981, 652
+	if (m_keyboardState[DIK_6] & 0x80)
+	{
+		left = -326;
+		right = 0;
+		front = 0;
+		behind = -133;
+		up = 308;
+		down = 0;
+
+		m_mouseX = 981;
+		m_mouseY = 652;
+	}
+}
+
+void InputClass::BitmapMove(float& move)
+{
+	if (m_keyboardState[DIK_Z] & 0x80)
+	{
+		move = -2000;
+	}
+
+	if (m_keyboardState[DIK_X] & 0x80)
+	{
+		move = 0;
+	}
+}
+
+void InputClass::ObjectMove(bool& moved)
+{
+	if (m_keyboardState[DIK_O] & 0x80)
+	{
+		moved = TRUE;
+	}
+	if (m_keyboardState[DIK_P] & 0x80)
+	{
+		moved = FALSE;
+		m_mouseX = 960;
+		m_mouseY = 600;
+	}
+}
+
 bool InputClass::CameraFixed()
 {
 	if (m_keyboardState[DIK_SPACE] & 0x80)
@@ -298,11 +473,10 @@ bool InputClass::CameraFixed()
 		return FALSE;
 }
 
-
-
 void InputClass::GetMouseLocation(int& mouseX, int& mouseY)
 {
 	mouseX = m_mouseX;
 	mouseY = m_mouseY;
 	return;
 }
+

@@ -12,12 +12,14 @@ SystemClass::SystemClass()
 	m_Cpu = 0;
 	m_Timer = 0;
 
-	left = 0.0f;
-	right = 0.0f;
-	front = 0.0f;
-	behind = 0.0f;
-	up = 0.0f;
-	down = 0.0f;
+	left = 0.0f;	ob_left = 0.0f;
+	right = 0.0f;	ob_right = 0.0f;
+	front = 0.0f;	ob_front = 0.0f;
+	behind = 0.0f;	ob_behind = 0.0f;
+	up = 0.0f;		ob_up = 0.0f;
+	down = 0.0f;	ob_down = 0.0f;
+	bit = 0.0f;
+	moved = TRUE;
 }
 
 
@@ -212,6 +214,7 @@ bool SystemClass::Frame()
 	bool result;
 	bool camerafix = FALSE;
 	int mouseX, mouseY;
+	
 
 	// Update the system stats.
 	m_Timer->Frame();
@@ -230,6 +233,9 @@ bool SystemClass::Frame()
 	// Get the location of the mouse from the input object,
 	m_Input->GetMouseLocation(mouseX, mouseY);
 	camerafix = m_Input->CameraFixed();
+	m_Input->ObjectMove(moved);
+	m_Input->BitmapMove(bit);
+
 	if (camerafix == TRUE)
 	{
 		left = 0.0f;
@@ -240,22 +246,36 @@ bool SystemClass::Frame()
 		down = 0.0f;
 	}
 
-	m_Input->CameraMoveL(left);
-	m_Input->CameraMoveR(right);
-	m_Input->CameraMoveF(front);
-	m_Input->CameraMoveB(behind);
-	m_Input->CameraMoveU(up);
-	m_Input->CameraMoveD(down);
+	if (moved == TRUE) {
+		m_Input->CameraMoveL(left);
+		m_Input->CameraMoveR(right);
+		m_Input->CameraMoveF(front);
+		m_Input->CameraMoveB(behind);
+		m_Input->CameraMoveU(up);
+		m_Input->CameraMoveD(down);
+		m_Input->CameraMoveForRoom(left, right, front, behind, up, down);
+	}
+
+	else {
+		m_Input->CameraMoveL(ob_left);
+		m_Input->CameraMoveR(ob_right);
+		m_Input->CameraMoveF(ob_front);
+		m_Input->CameraMoveB(ob_behind);
+		m_Input->CameraMoveU(ob_up);
+		m_Input->CameraMoveD(ob_down);
+	}
+
 
 	// Do the frame processing for the graphics object.
-	result = m_Graphics->Frame(m_Fps->GetFps(), m_Cpu->GetCpuPercentage(), m_Timer->GetTime(), mouseX, mouseY, left, right, front, behind, up, down);
+	result = m_Graphics->Frame(m_Fps->GetFps(), m_Cpu->GetCpuPercentage(), m_Timer->GetTime(), mouseX, mouseY, left, right, front, behind, up, down, bit, moved,
+								ob_left, ob_right, ob_front, ob_behind, ob_up, ob_down);
 	if (!result)
 	{
 		return false;
 	}
 
 	// Finally render the graphics to the screen.
-	result = m_Graphics->Render();
+	result = m_Graphics->Render(ob_left, ob_right, ob_front, ob_behind, ob_up, ob_down, moved);
 	if (!result)
 	{
 		return false;

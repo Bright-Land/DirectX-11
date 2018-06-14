@@ -89,50 +89,68 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Bitmapclass.cpp" />
+    <ClCompile Include="Bumpmapshaderclass.cpp" />
     <ClCompile Include="cameraclass.cpp" />
     <ClCompile Include="cpuclass.cpp" />
     <ClCompile Include="d3dclass.cpp" />
     <ClCompile Include="fontclass.cpp" />
     <ClCompile Include="fontshaderclass.cpp" />
     <ClCompile Include="fpsclass.cpp" />
+    <ClCompile Include="glassshaderclass.cpp" />
     <ClCompile Include="graphicsclass.cpp" />
     <ClCompile Include="inputclass.cpp" />
     <ClCompile Include="Lightclass.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="modelclass.cpp" />
+    <ClCompile Include="refractionclass.cpp" />
+    <ClCompile Include="rendertextureclass.cpp" />
     <ClCompile Include="systemclass.cpp" />
     <ClCompile Include="textclass.cpp" />
     <ClCompile Include="textureclass.cpp" />
     <ClCompile Include="Lightshaderclass.cpp" />
     <ClCompile Include="Textureshaderclass.cpp" />
     <ClCompile Include="timerclass.cpp" />
+    <ClCompile Include="watershaderclass.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bitmapclass.h" />
+    <ClInclude Include="Bumpmapshaderclass.h" />
     <ClInclude Include="cameraclass.h" />
     <ClInclude Include="cpuclass.h" />
     <ClInclude Include="d3dclass.h" />
     <ClInclude Include="fontclass.h" />
     <ClInclude Include="fontshaderclass.h" />
     <ClInclude Include="fpsclass.h" />
+    <ClInclude Include="glassshaderclass.h" />
     <ClInclude Include="graphicsclass.h" />
     <ClInclude Include="inputclass.h" />
     <ClInclude Include="Lightclass.h" />
     <ClInclude Include="modelclass.h" />
+    <ClInclude Include="refractionshaderclass.h" />
+    <ClInclude Include="rendertextureclass.h" />
     <ClInclude Include="systemclass.h" />
     <ClInclude Include="textclass.h" />
     <ClInclude Include="textureclass.h" />
     <ClInclude Include="Lightshaderclass.h" />
     <ClInclude Include="Textureshaderclass.h" />
     <ClInclude Include="timerclass.h" />
+    <ClInclude Include="watershaderclass.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Bumpmap.ps" />
+    <None Include="Bumpmap.vs" />
     <None Include="Font.ps" />
     <None Include="Font.vs" />
+    <None Include="glass.ps" />
+    <None Include="glass.vs" />
     <None Include="Light.ps" />
     <None Include="Light.vs" />
+    <None Include="refraction.ps" />
+    <None Include="refraction.vs" />
     <None Include="texture.ps" />
     <None Include="texture.vs" />
+    <None Include="Water.ps" />
+    <None Include="Water.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

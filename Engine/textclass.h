@@ -40,6 +40,7 @@ public:
 	bool Render(ID3D11DeviceContext*, D3DXMATRIX, D3DXMATRIX);
 
 	bool SetMousePosition(int, int, ID3D11DeviceContext*);
+	bool SetKeyBoardPosition(float, float, float, float, float, float, ID3D11DeviceContext*);
 	bool SetFps(int, ID3D11DeviceContext*);
 	bool SetCpu(int, ID3D11DeviceContext*);
 	bool SetPolygons(int &, ID3D11DeviceContext*);
@@ -65,6 +66,10 @@ private:
 	SentenceType* m_sentence5;
 	SentenceType* m_sentence6;
 	SentenceType* m_sentence7;
+
+	SentenceType* m_sentence8;
+	SentenceType* m_sentence9;
+	SentenceType* m_sentence10;
 
 };
 

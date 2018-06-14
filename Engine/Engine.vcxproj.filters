@@ -69,6 +69,21 @@
     <ClCompile Include="timerclass.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="refractionclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="rendertextureclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="watershaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Bumpmapshaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="glassshaderclass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cameraclass.h">
@@ -122,6 +137,21 @@
     <ClInclude Include="timerclass.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="rendertextureclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="refractionshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="watershaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Bumpmapshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="glassshaderclass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="texture.ps">
@@ -140,6 +170,30 @@
       <Filter>Shader Files</Filter>
     </None>
     <None Include="Font.ps">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Water.vs">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Water.ps">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="refraction.ps">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="refraction.vs">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Bumpmap.vs">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="Bumpmap.ps">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="glass.ps">
+      <Filter>Shader Files</Filter>
+    </None>
+    <None Include="glass.vs">
       <Filter>Shader Files</Filter>
     </None>
   </ItemGroup>
