@@ -1,3 +1,27 @@
-﻿  graphicsclass.cpp
-  Engine.vcxproj -> C:\Users\백환기\Desktop\Engine\Debug\Engine.exe
-  Engine.vcxproj -> C:\Users\백환기\Desktop\Engine\Debug\Engine.pdb (Full PDB)
+﻿  Bitmapclass.cpp
+  Bumpmapshaderclass.cpp
+  cameraclass.cpp
+  cpuclass.cpp
+  d3dclass.cpp
+  fontclass.cpp
+  fontshaderclass.cpp
+  fpsclass.cpp
+  glassshaderclass.cpp
+  graphicsclass.cpp
+  inputclass.cpp
+  Lightclass.cpp
+  main.cpp
+  modelclass.cpp
+  refractionclass.cpp
+  rendertextureclass.cpp
+  systemclass.cpp
+  textclass.cpp
+  textureclass.cpp
+  Lightshaderclass.cpp
+  Textureshaderclass.cpp
+  timerclass.cpp
+c:\users\math_15\documents\github\directx-11\engine\textclass.cpp(709): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\math_15\documents\github\directx-11\engine\textclass.cpp(723): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+c:\users\math_15\documents\github\directx-11\engine\textclass.cpp(737): warning C4244: '인수': 'float'에서 'int'(으)로 변환하면서 데이터가 손실될 수 있습니다.
+  watershaderclass.cpp
+LINK : fatal error LNK1104: 'd3dx11.lib' 파일을 열 수 없습니다.
